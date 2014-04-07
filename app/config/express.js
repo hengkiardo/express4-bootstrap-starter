@@ -3,6 +3,7 @@ var logger         = require('morgan')
   , responseTime   = require('response-time')
   , methodOverride = require('method-override')
   , multer         = require('multer')
+  , compression    = require('compression')
   , favicon        = require('static-favicon')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
@@ -23,7 +24,7 @@ module.exports = function (app, express, passport) {
     .set('env', env)
     .set('port', app.config.server.port || 3000)
     // set views path, template engine and default layout
-    .set('views', app.config.root + '/app/views')
+    .set('views', path.join(__dirname, '../../app/views'))
     .set('view engine', 'jade')
 
   app
@@ -57,7 +58,12 @@ module.exports = function (app, express, passport) {
 
     app
       .use(logger())
-      .use(require('compression')())
+      .use(compression({
+        filter: function (req, res) {
+          return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
+        },
+        level: 9
+      }))
       .use(function logErrors(err, req, res, next){
 
       if (err.status === 404) {

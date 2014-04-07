@@ -6,7 +6,6 @@ var mongoose = require('mongoose')
 var passport = require('passport')
 var routes   = require('./app/routes')
 var config   = require('./app/config/config')
-
 var app = express();
 
 app.config = config;

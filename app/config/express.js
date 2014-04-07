@@ -2,6 +2,7 @@ var logger         = require('morgan')
   , path           = require('path')
   , responseTime   = require('response-time')
   , methodOverride = require('method-override')
+  , multer         = require('multer')
   , favicon        = require('static-favicon')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
@@ -18,17 +19,15 @@ module.exports = function (app, express, passport) {
   }
 
   // settings
-
-  // app.engine('jade', require('jade').__express)
-
   app
+    .set('env', env)
     .set('port', app.config.server.port || 3000)
     // set views path, template engine and default layout
+    .set('views', app.config.root + '/app/views')
+    .set('view engine', 'jade')
 
-  app.set('views', app.config.root + '/app/views')
-  app.set('view engine', 'jade')
-  app.set('env', env)
-
+  app
+    .enable('trust proxy')
 
   app
     .disable('x-powered-by')
@@ -38,28 +37,39 @@ module.exports = function (app, express, passport) {
     .use(favicon(path.join(app.config.root, 'public/favicon.ico')))
     .use(express.static(path.join(app.config.root, 'public')))
     .use(bodyParser())
+    .use(multer())
     .use(methodOverride())
-    // .use(express.cookieParser('notagoodsecretnoreallydontusethisone'));
-    .use(errorHandler())
+    .use(require('cookie-parser')('notagoodsecretnoreallydontusethisone'))
     .use(allowCrossDomain)
     .use(function (req, res, next) {
       res.locals.pkg = pkg
       next()
     })
 
+  if(env == 'development') {
 
+    app
+      .use(logger('dev'))
+      .use(errorHandler())
+      .use(responseTime())
 
-  // if(env == 'development') {
+  } else {
 
-  //   app
-  //     .set('view options', {
-  //       pretty : false,
-  //       layout: false
-  //     })
+    app
+      .use(logger())
+      .use(require('compression')())
+      .use(function logErrors(err, req, res, next){
 
-  //   app
-  //     .use(logger())
-  //     .use(responseTime())
+      if (err.status === 404) {
+        return next(err)
+      }
 
-  // }
+      if (err.logError === false) {
+        return next(err)
+      }
+
+      console.error(err.stack)
+      next(err)
+    })
+  }
 }

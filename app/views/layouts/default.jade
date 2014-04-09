@@ -4,9 +4,15 @@ html.app(lang='en')
   include ../includes/head
 
   body
-    block main
 
-    block content
+    include ../includes/header
+
+    .container
+      block main
+
+      block content
+
+      block form
 
 
     include ../includes/footer

@@ -1,0 +1,21 @@
+extends ../layouts/default
+
+block form
+  include ../includes/messages
+
+  form.form-signin(action="/users/session", method="post", role="form")
+    input(type='hidden', name='_csrf', value="#{csrf_token}")
+    p.col-sm-offset-2.error= message
+    .list-group
+      .list-group-item
+        input.form-control.no-border(type='text', placeholder='Email', name="email")
+      .list-group-item
+        input.form-control.no-border(type='password', placeholder='Password', name="password")
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+    //- .text-center.m-t.m-b
+    //-   a(href='users/forgot-password')
+    //-     small Forgot password?
+    .line.line-dashed
+    p.text-muted.text-center
+      small Do not have an account?
+    a.btn.btn-lg.btn-default.btn-block(href='/signup') Create an account

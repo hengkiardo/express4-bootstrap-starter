@@ -1,4 +1,4 @@
-nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+div.navbar.navbar-default.navbar-fixed-top(role='navigation')
   .container
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -7,18 +7,17 @@ nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         span.icon-bar
         span.icon-bar
       a.navbar-brand(href='/')
+        span ExpressJS 4 Bootstrap
     .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li(class=isActive('/articles/new') ? 'active' : '')
-          a(href="/articles/new", title="new article") New
-
       ul.nav.navbar-nav.navbar-right
         - if (req.isAuthenticated())
           li
-            a(href="/users/"+req.user.id, title="Profile") Profile
+            a(href="/"+req.user.username, title="Profile") Profile
           li
             a(href="/logout", title="logout") Logout
         - else
           li(class=isActive('/login') ? 'active' : '')
             a(href="/login", title="Login") Login
+          li(class=isActive('/signup') ? 'active' : '')
+            a(href="/signup", title="Login") Create Account
 

@@ -38,6 +38,11 @@
     "passport": "^0.2.0",
     "view-helpers": "^0.1.4",
     "async": "^0.7.0",
-    "winston": "^0.7.3"
+    "winston": "^0.7.3",
+    "express-session": "^1.0.2",
+    "statuses": "^1.0.2",
+    "connect-flash": "^0.1.1",
+    "lodash": "^2.4.1",
+    "connect-mongo": "^0.4.0"
   }
 }

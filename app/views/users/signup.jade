@@ -1,0 +1,24 @@
+extends ../layouts/default
+
+block form
+
+  include ../includes/messages
+
+  form.form-signin(action="/users/create", method="post", role="form")
+    input(type='hidden', name='_csrf', value="#{csrf_token}")
+    p.col-sm-offset-2.error= message
+    .list-group
+      .list-group-item
+        input.form-control.no-border(type='email', name="email", placeholder='Email', value=user.email)
+      .list-group-item
+        input.form-control.no-border(type='text', name="username", placeholder='Username', value=user.username)
+      .list-group-item
+        input.form-control.no-border(type='password', name="password", placeholder='Password')
+    //.checkbox.m-b
+      label
+        input(type='checkbox') | Agree the a(href='#') terms and policy
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign up
+    .line.line-dashed
+    p.text-muted.text-center
+      small Already have an account?
+    a.btn.btn-lg.btn-default.btn-block(href='/login') Sign in

@@ -1,6 +1,7 @@
 var express = require('express');
-
 var routes = exports;
+var fs = require('fs')
+var objectIdRegex = /\d{8}|\d{16}/
 
 var indexRouter = express.Router();
 
@@ -13,3 +14,4 @@ indexRouter.route('/')
   });
 
 routes.index = indexRouter;
+routes.user = require('./user');

@@ -6,9 +6,15 @@ var logger         = require('morgan')
   , compression    = require('compression')
   , favicon        = require('static-favicon')
   , bodyParser     = require('body-parser')
+  , cookieParser   = require('cookie-parser')
+  , session        = require('express-session')
+  , MongoStore     = require('connect-mongo')(session)
   , errorHandler   = require('errorhandler')
   , env            = process.env.NODE_ENV || 'development'
+  , views_helpers  = require('../helper/views-helper')
   , pkg            = require('../../package.json')
+  , flash          = require('connect-flash')
+  , routes         = require('../routes')
 
 module.exports = function (app, express, passport) {
 
@@ -23,7 +29,6 @@ module.exports = function (app, express, passport) {
   app
     .set('env', env)
     .set('port', app.config.server.port || 3000)
-    // set views path, template engine and default layout
     .set('views', path.join(__dirname, '../../app/views'))
     .set('view engine', 'jade')
 
@@ -40,12 +45,32 @@ module.exports = function (app, express, passport) {
     .use(bodyParser())
     .use(multer())
     .use(methodOverride())
-    .use(require('cookie-parser')('notagoodsecretnoreallydontusethisone'))
     .use(allowCrossDomain)
+
+  app.use(cookieParser('notagoodsecretnoreallydontusethisone'))
+  app.use(session({
+    secret: pkg.name,
+    store: new MongoStore({
+      url: app.config.database.url,
+      collection : 'sessions',
+      auto_reconnect: true
+    })
+  }))
+
+  // use passport session
+  app.use(passport.initialize())
+  app.use(passport.session({
+    maxAge: new Date(Date.now() + 3600000)
+  }))
+
+  app
     .use(function (req, res, next) {
       res.locals.pkg = pkg
       next()
     })
+    .use(flash())
+    .use(views_helpers(pkg.name))
+
 
   if(env == 'development') {
 
@@ -78,4 +103,8 @@ module.exports = function (app, express, passport) {
       next(err)
     })
   }
+
+    /** ROUTES Apps */
+  app.use(routes.index)
+  app.use(routes.user)
 }

@@ -11,10 +11,17 @@ div.navbar.navbar-default.navbar-fixed-top(role='navigation')
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         - if (req.isAuthenticated())
-          li
-            a(href="/"+req.user.username, title="Profile") Profile
-          li
-            a(href="/logout", title="logout") Logout
+          li.dropdown
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown") My Account &nbsp;
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href="/#{req.user.username}", title="Profile") Profile
+              li
+                a(href="#" title="Profile") Settings
+              li.divider
+              li
+                a(href="/logout", title="logout") Logout
         - else
           li(class=isActive('/login') ? 'active' : '')
             a(href="/login", title="Login") Login

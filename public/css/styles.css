@@ -1,8 +1,29 @@
+html,
+body {
+  height: 100%;
+}
+
 body {
   padding-top: 70px;
   padding-bottom: 40px;
   background-color: #fff;
 }
+
+#page {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -100px;
+  padding: 0 0 140px;
+}
+
+footer {
+  font-size: 12px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 100px;
+}
+
 
 .form-signin {
   max-width: 330px;

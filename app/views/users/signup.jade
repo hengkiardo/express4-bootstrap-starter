@@ -2,7 +2,8 @@ extends ../layouts/default
 
 block form
 
-  include ../includes/messages
+  .form-signin
+    include ../includes/messages
 
   form.form-signin(action="/users/create", method="post", role="form")
     input(type='hidden', name='_csrf', value="#{csrf_token}")

@@ -115,9 +115,17 @@ exports.show = function (req, res, next) {
  */
 
 exports.user_profile = function (req, res, next) {
-  user = req.user
-  res.render('users/show', {
-    title: user.name,
-    user: user
-  })
+  if(!req.user) {
+    res.redirect('/')
+  } else {
+
+    user = req.user
+
+    res.render('users/show', {
+      title: user.name,
+      user: user
+    })
+  }
+
+
 }

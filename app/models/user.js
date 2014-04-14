@@ -18,17 +18,15 @@ var UserSchema = new Schema({
   },
   email: {
     type: String,
+    unique: true,
     require: true
   },
-  firstname: {
-    type: String,
-  },
-  lastname: {
-    type: String,
-  },
-  photo_profile: {
-    type: String,
-  },
+  firstname: String,
+  lastname: String,
+  photo_profile: String,
+  facebook: {},
+  twitter: {},
+  tokens: [],
   provider: {
     type: String,
     default: 'local'

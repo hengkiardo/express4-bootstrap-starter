@@ -71,6 +71,30 @@ module.exports = function (app, express, passport) {
     .use(flash())
     .use(views_helpers(pkg.name))
 
+    /** ROUTES Apps */
+  app.use(routes.index)
+  app.use(routes.user)
+
+  app
+    .use(function(err, req, res, next){
+      // treat as 404
+      if (err.message
+        && (~err.message.indexOf('not found')
+        || (~err.message.indexOf('Cast to ObjectId failed')))) {
+        return next()
+      }
+      // log it
+      // send emails if you want
+      console.error(err.stack)
+      // error page
+      res.status(500).render('500', { error: err.stack })
+    })
+    .use(function(req, res, next){
+      res.status(404).render('404', {
+        url: req.originalUrl,
+        error: 'Not found'
+      })
+    })
 
   if(env == 'development') {
 
@@ -91,20 +115,16 @@ module.exports = function (app, express, passport) {
       }))
       .use(function logErrors(err, req, res, next){
 
-      if (err.status === 404) {
-        return next(err)
-      }
+        if (err.status === 404) {
+          return next(err)
+        }
 
-      if (err.logError === false) {
-        return next(err)
-      }
+        if (err.logError === false) {
+          return next(err)
+        }
 
-      console.error(err.stack)
-      next(err)
-    })
+        console.error(err.stack)
+        next(err)
+      })
   }
-
-    /** ROUTES Apps */
-  app.use(routes.index)
-  app.use(routes.user)
 }

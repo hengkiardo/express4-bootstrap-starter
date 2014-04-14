@@ -59,3 +59,14 @@ footer {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.form-signin button[type="submit"] {
+  width: 50%;
+  margin: 0 auto 20px;
+}
+
+.form-signin .btn-twitter {
+  color: #ffffff;
+  background-color: #55acee;
+  border-color: rgba(0, 0, 0, 0.2);
+}

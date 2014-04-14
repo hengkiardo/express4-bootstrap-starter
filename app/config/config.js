@@ -20,29 +20,13 @@ var config = {
     app      : {
       name : 'BlastBoom - Email and SMS Blasting'
     },
+    twitterAuth: true,
     twitter: {
-      clientID     : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      clientSecret : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      callbackURL  : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX"
+      consumerKey: process.env.TWITTER_KEY || 'HjuVAFjJksaCxec6fZc1jw',
+      consumerSecret: process.env.TWITTER_SECRET  || 'VCMzGTZowbxIVMI5dcqpxwVpzcp2n30eee2DEEGsi7M',
+      callbackURL: '/auth/twitter/callback',
+      passReqToCallback: true
     },
-    twitterCredential : {
-      consumer_key        : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      consumer_secret     : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      access_token        : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      access_token_secret :  'XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX'
-    },
-  },
-  //
-  // Testing config
-  //
-  test: {
-    server: {
-      port: 4001,
-      hostname: 'localhost',
-    },
-    database: {
-      url: 'mongodb://localhost/express_test'
-    }
   },
   //
   // Production Config
@@ -57,19 +41,28 @@ var config = {
     app      : {
       name : 'BlastBoom - Email and SMS Blasting'
     },
+    twitterAuth: true,
     twitter: {
-      clientID     : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      clientSecret : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      callbackURL  : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX"
-    },
-    twitterCredential : {
-      consumer_key        : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      consumer_secret     : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      access_token        : "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX",
-      access_token_secret :  'XXXXXXX-XXXXXXX-XXXXXXX-XXXXXX'
+      consumerKey: process.env.TWITTER_KEY || 'Your Consumer Key',
+      consumerSecret: process.env.TWITTER_SECRET  || 'Your Consumer Secret',
+      callbackURL: '/auth/twitter/callback',
+      passReqToCallback: true
     },
     database: {
       url: process.env.MONGODB_CONNECTION_URI || 'mongodb://localhost/express4_bootstrap_starter'
+    }
+  },
+
+  //
+  // Testing config
+  //
+  test: {
+    server: {
+      port: 4001,
+      hostname: 'localhost',
+    },
+    database: {
+      url: 'mongodb://localhost/express_test'
     }
   }
 };

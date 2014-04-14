@@ -27,6 +27,13 @@ var config = {
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true
     },
+    facebookAuth: true,
+    facebook: {
+      clientID: process.env.FACEBOOK_ID || 'Your App ID',
+      clientSecret: process.env.FACEBOOK_SECRET || 'Your App Secret',
+      callbackURL: '/auth/facebook/callback',
+      passReqToCallback: true
+    }
   },
   //
   // Production Config
@@ -35,6 +42,9 @@ var config = {
     server: {
       port: 8080,
       hostname: process.env.HOSTNAME || '127.0.0.1',
+    },
+    database: {
+      url: process.env.MONGODB_CONNECTION_URI || 'mongodb://localhost/express4_bootstrap_starter'
     },
     BaseApiURL : 'http://localhost:8080/api/v1/',
     root     : rootPath,
@@ -48,8 +58,12 @@ var config = {
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true
     },
-    database: {
-      url: process.env.MONGODB_CONNECTION_URI || 'mongodb://localhost/express4_bootstrap_starter'
+    facebookAuth: true,
+    facebook: {
+      clientID: process.env.FACEBOOK_ID || 'Your App ID',
+      clientSecret: process.env.FACEBOOK_SECRET || 'Your App Secret',
+      callbackURL: '/auth/facebook/callback',
+      passReqToCallback: true
     }
   },
 

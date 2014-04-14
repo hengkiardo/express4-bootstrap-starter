@@ -26,7 +26,7 @@ footer {
 
 
 .form-signin {
-  max-width: 330px;
+  max-width: 375px;
   padding: 15px;
   margin: 0 auto;
 }
@@ -39,6 +39,8 @@ footer {
 }
 .form-signin .form-control {
   position: relative;
+  border: none;
+  box-shadow: none !important;
   height: auto;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -48,6 +50,9 @@ footer {
 }
 .form-signin .form-control:focus {
   z-index: 2;
+  outline: none;
+  box-shadow: none !important;
+  border: none;
 }
 .form-signin input[type="email"] {
   margin-bottom: -1px;
@@ -55,18 +60,31 @@ footer {
   border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
-  margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .form-signin button[type="submit"] {
-  width: 50%;
+  width: 70%;
   margin: 0 auto 20px;
 }
 
 .form-signin .btn-twitter {
   color: #ffffff;
+  text-align: left;
+  width: 165px;
+  float: left;
+  padding-left: 10px;
   background-color: #55acee;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.form-signin .btn-facebook {
+  color: #ffffff;
+  text-align: left;
+  width: 170px;
+  float: right;
+  padding-left: 10px;
+  background-color: #3b5998;
   border-color: rgba(0, 0, 0, 0.2);
 }

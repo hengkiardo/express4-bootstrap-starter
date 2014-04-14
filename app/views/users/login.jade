@@ -9,16 +9,23 @@ block form
     p.col-sm-offset-2.error= message
     .list-group
       .list-group-item
-        input.form-control.no-border(type='text', placeholder='Email', name="email")
+        input.form-control.no-border(type='text', autocomplete="off" placeholder='Email', name="email")
       .list-group-item
         input.form-control.no-border(type='password', placeholder='Password', name="password")
 
     button.btn.btn-lg.btn-primary.btn-block.btn-login(type='submit') Sign in
 
     a.btn.btn-block.btn-twitter.btn-social(href="/auth/twitter")
-      i.fa.fa-twitter Sign in with Twitter
+      i.fa.fa-twitter
+      | &nbsp; Sign in with Twitter
 
-    .line.line-dashed
+    a.btn.btn-block.btn-facebook.btn-social(href="/auth/facebook")
+      i.fa.fa-facebook
+      | &nbsp; Sign in with Facebook
+
+    div.clearfix
+
+    p.line.line-dashed
 
     p.text-muted.text-center
       small Do not have an account?

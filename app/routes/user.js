@@ -21,6 +21,10 @@ users
   .get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), function(req, res) {
     res.redirect(req.session.returnTo || '/');
   })
+  .get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }))
+  .get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), function(req, res) {
+    res.redirect(req.session.returnTo || '/');
+  })
   .get('/:username', userController.user_profile)
 
 module.exports = users

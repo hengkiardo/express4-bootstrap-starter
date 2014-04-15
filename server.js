@@ -33,11 +33,11 @@ var server = http.createServer(app)
       return console.trace(err);
     }
 
-    console.log('ExpressJS server listening on port %s', app.get('port'))
+    console.log("\n✔ Express server listening on port %d in %s mode", app.get('port'), app.get('env'));
 
   });
 
 server.on('error', function (err) {
-  console.log(err);
+  console.error('✗ '+ err);
   // TODO: do something with the error
 });

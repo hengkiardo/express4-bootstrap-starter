@@ -22,15 +22,15 @@ var config = {
     },
     twitterAuth: true,
     twitter: {
-      consumerKey: process.env.TWITTER_KEY || 'HjuVAFjJksaCxec6fZc1jw',
-      consumerSecret: process.env.TWITTER_SECRET  || 'VCMzGTZowbxIVMI5dcqpxwVpzcp2n30eee2DEEGsi7M',
+      consumerKey: process.env.TWITTER_KEY || 'xxxxxxxxxxxxxxxxxxxxxxx',
+      consumerSecret: process.env.TWITTER_SECRET  || 'xxxxxxxxxxxxxxxxxxxxxxx',
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true
     },
     facebookAuth: true,
     facebook: {
-      clientID: process.env.FACEBOOK_ID || 'Your App ID',
-      clientSecret: process.env.FACEBOOK_SECRET || 'Your App Secret',
+      clientID: process.env.FACEBOOK_ID || 'xxxxxxxxxxxxxxxxxxxxxxx',
+      clientSecret: process.env.FACEBOOK_SECRET || 'xxxxxxxxxxxxxxxxxxxxxx',
       callbackURL: '/auth/facebook/callback',
       passReqToCallback: true
     }

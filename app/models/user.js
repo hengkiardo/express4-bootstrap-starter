@@ -120,7 +120,7 @@ UserSchema.pre('save', function(next) {
   if (!this.isNew) return next()
 
   if (!validatePresenceOf(this.password)
-    && authTypes.indexOf(this.provider) === -1)
+    && oAuthTypes.indexOf(this.provider) === -1)
     next(new Error('Invalid password'))
   else
     next()

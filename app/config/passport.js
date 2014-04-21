@@ -66,10 +66,11 @@ module.exports = function (app, passport) {
         } else {
           User.findById(req.user.id, function(err, user) {
 
-            user.email    = profile.username + "@twitter.com"
-            user.provider = 'twitter'
-            user.twitter  = profile
-            user.username = profile.screen_name
+            user.email         = profile.username + "@twitter.com"
+            user.provider      = 'twitter'
+            user.twitter       = profile._json
+            user.photo_profile = profile._json.profile_image_url
+            user.username      = profile.username
             user.tokens.push({ kind: 'twitter', accessToken: accessToken, tokenSecret: tokenSecret })
 
             user.save(function(err) {
@@ -88,10 +89,11 @@ module.exports = function (app, passport) {
         // But a person’s twitter username is guaranteed to be unique
         // so we can "fake" a twitter email address as follows:
 
-        user.email    = profile.username + "@twitter.com"
-        user.provider = 'twitter'
-        user.twitter  = profile
-        user.username = profile.screen_name
+        user.email         = profile.username + "@twitter.com"
+        user.provider      = 'twitter'
+        user.twitter       = profile._json
+        user.photo_profile = profile._json.profile_image_url
+        user.username      = profile.username
         user.tokens.push({ kind: 'twitter', accessToken: accessToken, tokenSecret: tokenSecret })
 
         user.save(function(err) {

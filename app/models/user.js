@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
+  , CreateUpdatedAt = require('mongoose-timestamp')
   , crypto = require('crypto')
   , oAuthTypes = ['twitter', 'facebook', 'google']
 /**
@@ -37,16 +38,10 @@ var UserSchema = new Schema({
   },
   salt: {
     type: String
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
-  },
+  }
 })
+
+UserSchema.plugin(CreateUpdatedAt)
 
 /**
  * Virtuals

@@ -59,7 +59,7 @@ module.exports = function (app, passport) {
 
   passport.use(new TwitterStrategy(app.config.twitter, function(req, accessToken, tokenSecret, profile, done) {
     if (req.user) {
-      User.findOne({ 'twitter.id': profile.id }, function(err, existingUser) {
+      User.findOne({ $or: [{'twitter.id': profile.id }, { email: profile.username + "@twitter.com" }] }, function(err, existingUser) {
         if (existingUser) {
           req.flash('errors', { msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.' })
           done(err)
@@ -82,7 +82,7 @@ module.exports = function (app, passport) {
       });
 
     } else {
-      User.findOne({ 'twitter.id': profile.id }, function(err, existingUser) {
+      User.findOne({ 'twitter.id_str': profile.id }, function(err, existingUser) {
         if (existingUser) return done(null, existingUser)
         var user = new User()
         // Twitter will not provide an email address.  Period.

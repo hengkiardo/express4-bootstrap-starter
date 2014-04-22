@@ -12,8 +12,8 @@
   ],
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec --timeout 10000 test/test-*.js"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "author": "Hengkiardo <hengki.sihombing@gmail.com> (https://github.com/aredo)",
   "repository": {

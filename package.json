@@ -12,7 +12,7 @@
   ],
   "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "mocha"
   },
   "author": "Hengkiardo <hengki.sihombing@gmail.com> (https://github.com/aredo)",

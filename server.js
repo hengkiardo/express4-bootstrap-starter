@@ -5,7 +5,7 @@ var fs       = require('fs')
 var express  = require('express')
 var mongoose = require('mongoose')
 var passport = require('passport')
-var config   = require('./app/config/config')
+var config   = require(__dirname + '/app/config/config')
 var app      = express();
 
 

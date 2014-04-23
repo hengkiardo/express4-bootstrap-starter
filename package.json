@@ -1,7 +1,7 @@
 {
   "name": "Express4-Bootstrap-Starter",
-  "version": "0.0.0",
-  "description": "A demo app illustrating the usage of express, mongoose, passportjs, jade and other modules in nodejs",
+  "version": "0.1.0",
+  "description": "A simple demo app in Node.js using ExpressJS 4, Mongoose, Passport.js and Jade",
   "keywords": [
     "express",
     "express4",

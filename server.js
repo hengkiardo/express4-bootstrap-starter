@@ -41,3 +41,5 @@ server.on('error', function (err) {
   console.error('✗ '+ err);
   // TODO: do something with the error
 });
+
+module.exports = app;

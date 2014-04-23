@@ -1,6 +1,6 @@
 var chai = require('chai');
 var should = chai.should();
-var User = require('../models/User');
+var User = require('../app/models/user');
 
 describe('User Model', function() {
     it('should create a new user', function(done) {
@@ -14,16 +14,19 @@ describe('User Model', function() {
         })
     });
 
-    it('should not create a user with the unique email', function(done) {
-        var user = new User({
-            email: 'test@gmail.com',
-            password: 'password'
-        });
-        user.save(function(err) {
-            if (err) err.code.should.equal(11000);
-            done();
-        });
-    });
+    // it('should not create a user with the unique email', function(done) {
+    //     var user = new User({
+    //         email: 'test@gmail.com',
+    //         password: 'password'
+    //     });
+    //     user.save(function(err) {
+    //         if (err)
+    //             return done(err);
+    //             // console.log(err);
+    //             // err.code.should.equal(11000);
+    //         done();
+    //     });
+    // });
 
     it('should find user by email', function(done) {
         User.findOne({

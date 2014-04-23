@@ -25,4 +25,3 @@ build/Release
 node_modules
 rsync_exclude.txt
 deploy
-app/config/config.js

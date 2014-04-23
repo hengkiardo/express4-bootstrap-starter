@@ -18,19 +18,19 @@ var config = {
     BaseApiURL : 'http://localhost:3001/api/v1/',
     root     : rootPath,
     app      : {
-      name : 'BlastBoom - Email and SMS Blasting'
+      name : 'Express4-Bootstrap-Starter'
     },
     twitterAuth: true,
     twitter: {
-      consumerKey: process.env.TWITTER_KEY || 'xxxxxxxxxxxxxxxxxxxxxxx',
-      consumerSecret: process.env.TWITTER_SECRET  || 'xxxxxxxxxxxxxxxxxxxxxxx',
+      consumerKey: process.env.TWITTER_KEY || 'HjuVAFjJksaCxec6fZc1jw',
+      consumerSecret: process.env.TWITTER_SECRET  || 'VCMzGTZowbxIVMI5dcqpxwVpzcp2n30eee2DEEGsi7M',
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true
     },
     facebookAuth: true,
     facebook: {
-      clientID: process.env.FACEBOOK_ID || 'xxxxxxxxxxxxxxxxxxxxxxx',
-      clientSecret: process.env.FACEBOOK_SECRET || 'xxxxxxxxxxxxxxxxxxxxxx',
+      clientID: process.env.FACEBOOK_ID || '533758460065977',
+      clientSecret: process.env.FACEBOOK_SECRET || '42fb6d9a8607cc549d5ca194c7422037',
       callbackURL: '/auth/facebook/callback',
       passReqToCallback: true
     }
@@ -40,28 +40,29 @@ var config = {
   //
   production: {
     server: {
-      port: 8080,
+      port: 3001,
       hostname: process.env.HOSTNAME || '127.0.0.1',
     },
     database: {
       url: process.env.MONGODB_CONNECTION_URI || 'mongodb://localhost/express4_bootstrap_starter'
     },
-    BaseApiURL : 'http://localhost:8080/api/v1/',
+    BaseApiURL : 'http://localhost:3001/api/v1/',
     root     : rootPath,
     app      : {
       name : 'BlastBoom - Email and SMS Blasting'
     },
     twitterAuth: true,
     twitter: {
-      consumerKey: process.env.TWITTER_KEY || 'Your Consumer Key',
-      consumerSecret: process.env.TWITTER_SECRET  || 'Your Consumer Secret',
+      // https://apps.twitter.com/app/6070534/keys
+      consumerKey: process.env.TWITTER_KEY || 'zNDE0qEnZt6FdXQv60roe2p72',
+      consumerSecret: process.env.TWITTER_SECRET  || 'T6T3DzAkvz3282BCvjPRJ96WYvLPXcBY7J6MrnBng9fQq57joq',
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true
     },
     facebookAuth: true,
     facebook: {
-      clientID: process.env.FACEBOOK_ID || 'Your App ID',
-      clientSecret: process.env.FACEBOOK_SECRET || 'Your App Secret',
+      clientID: process.env.FACEBOOK_ID || '1405367119739358',
+      clientSecret: process.env.FACEBOOK_SECRET || '844371cba2b8192162db08b80f2b9702',
       callbackURL: '/auth/facebook/callback',
       passReqToCallback: true
     }

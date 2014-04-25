@@ -4,10 +4,16 @@
   "description": "A simple demo app in Node.js using ExpressJS 4, Mongoose, Passport.js and Jade",
   "keywords": [
     "express",
+    "expressJS",
     "express4",
+    "expressJS4",
     "mongoose",
     "mongodb",
     "passport",
+    "twitter login",
+    "facebook login",
+    "grunt",
+    "grunt",
     "demo"
   ],
   "main": "server.js",
@@ -27,7 +33,7 @@
     "body-parser": "^1.0.0",
     "cookie-parser": "latest",
     "compression": "latest",
-    "static-favicon": "^1.0.0",
+    "static-favicon": "^1.0.2",
     "method-override": "^1.0.0",
     "mongoose": "^3.8.8",
     "errorhandler": "^1.0.0",
@@ -44,7 +50,6 @@
     "connect-flash": "^0.1.1",
     "lodash": "^2.4.1",
     "connect-mongo": "^0.4.0",
-    "jquery-file-upload-middleware": "^0.1.1",
     "multer": "0.0.5",
     "mongoose-timestamp": "^0.2.1",
     "passport-facebook": "^1.0.3"
@@ -53,8 +58,20 @@
     "mocha": "^1.18.2",
     "chai": "^1.9.1",
     "supertest": "^0.11.0",
-    "mstring": "^0.1.2",
-    "inquirer": "^0.4.1",
-    "colors": "^0.6.2"
+    "colors": "^0.6.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "latest",
+    "grunt-cli": "latest",
+    "grunt-nodemon": "latest",
+    "grunt-concurrent": "latest",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-clean": "~0.4.1",
+    "load-grunt-tasks": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-csslint": "~0.2.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-less": "~0.9.0"
   }
 }

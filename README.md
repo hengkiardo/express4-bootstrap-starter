@@ -4,7 +4,6 @@ ExpressJS 4 Starter
 A simple demo app in Node.js using expressJS 4, Mongoose, Passport.js and Jade for Beginners
 
 [![Build Status](https://travis-ci.org/aredo/express4-bootstrap-starter.svg?branch=master)](https://travis-ci.org/aredo/express4-bootstrap-starter)
-
 [![Dependencies Status](https://david-dm.org/aredo/express4-bootstrap-starter.png)](https://david-dm.org/aredo/express4-bootstrap-starter)
 
 ## Install
@@ -15,21 +14,23 @@ A simple demo app in Node.js using expressJS 4, Mongoose, Passport.js and Jade f
 
 ### Tool Prerequisites
 
-- NPM - Node.js package manager, should be installed when you install node.js. NPM (Node Package Manager) will look at the [package.json](https://github.com/jpotts18/mean-stack-relational/blob/master/package.json) file in the root of the project and download all of the necessary dependencies and put them in a folder called ```node_modules```
--  [imagemagick](http://www.imagemagick.org/script/index.php)
+- [NPM](https://npmjs.org) - Node.js package manager, should be installed when you install node.js. NPM (Node Package Manager) will look at the [package.json](https://github.com/jpotts18/mean-stack-relational/blob/master/package.json) file in the root of the project and download all of the necessary dependencies and put them in a folder called ```node_modules```
+- [Genghis](http://genghisapp.com/) - The single-file MongoDB admin app
+
+### Javascript Tools Used
+- [Grunt](http://gruntjs.com/) - In one word: automation. The less work you have to do when performing repetitive tasks like minification, compilation, unit testing, linting, etc, the easier your job becomes. After you've configured it, a Grunt can do most of that mundane work for you—and your team—with basically zero effort.
+
 
 **NOTE:**
 After installing  Node.js and MongoDB server has running, then its time to running your server.
 
 ```
-  $ git clone git@bitbucket.org:gushcloud_id/gushcentral.git
+  $ git clone git@github.com:aredo/express4-bootstrap-starter.git
   $ npm install
-  $ cp config/config.example.js config/config.js
-  $ cp config/imager.example.js config/imager.js
   $ grunt
 ```
 
-Then visit [http://localhost:8765/](http://localhost:8765/)
+Then visit [http://localhost:3001/](http://localhost:3001/)
 
 
 ### NPM Modules Used
@@ -39,9 +40,8 @@ Then visit [http://localhost:8765/](http://localhost:8765/)
 - [LESS.JS](http://lesscss.org/) - Less is a CSS pre-processor, meaning that it extends the CSS language, adding features that allow variables, mixins, functions and many other techniques that allow you to make CSS that is more maintainable, themable and extendable.
 
 
-
-
 ### Directory structure
+
 ```
 -app/
   |__config/
@@ -59,9 +59,10 @@ Then visit [http://localhost:8765/](http://localhost:8765/)
   |__fonts
   |__img
   favicon.ico
+-Grunfile.coffee
 ```
 
 
 # Troubleshooting
 
-During install some of you may encounter some issues feel free to contact me (@hengkiardo), via the repository issue tracker or the links provided below. I am also available on twitter [@hengkiardo](http://twitter.com/hengkiardo).
+During install some of you may encounter some issues feel free to contact me [@hengkiardo](http://twitter.com/hengkiardo) or submit [issue](https://github.com/aredo/express4-bootstrap-starter/issues). via the repository issue tracker or the links provided below. I am also available on twitter [@hengkiardo](http://twitter.com/hengkiardo).

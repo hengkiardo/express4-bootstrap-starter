@@ -19,9 +19,12 @@ head(prefix="og: http://ogp.me/ns# express4-bootstrap-starter: http://ogp.me/ns/
   meta(property="og:image", content="")
   meta(property="og:site_name", content="#{pkg.app_name}")
 
-  link( rel="stylesheet" href="/css/bootstrap.min.css" type="text/css")
-  link( rel="stylesheet" href="/css/font-awesome.min.css" type="text/css")
-  link( rel="stylesheet" href="/css/styles.css" type="text/css")
+  if NODE_ENV == 'development'
+    link( rel="stylesheet" href="/css/bootstrap.css" type="text/css")
+    link( rel="stylesheet" href="/css/apps.css" type="text/css")
+
+  if NODE_ENV == 'production'
+    link( rel="stylesheet" href="/assets/css/apps.min.css" type="text/css")
 
   //[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

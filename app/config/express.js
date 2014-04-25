@@ -65,7 +65,8 @@ module.exports = function (app, express, passport) {
 
   app
     .use(function (req, res, next) {
-      res.locals.pkg = pkg
+      res.locals.pkg      = pkg
+      res.locals.NODE_ENV = env
       next()
     })
     .use(flash())
@@ -96,7 +97,7 @@ module.exports = function (app, express, passport) {
       })
     })
 
-  if(env == 'development') {
+  if(env === 'development') {
 
     app
       .use(logger('dev'))

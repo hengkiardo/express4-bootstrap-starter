@@ -40,7 +40,7 @@ var config = {
   //
   production: {
     server: {
-      port: 3001,
+      port: 3030,
       hostname: process.env.HOSTNAME || '127.0.0.1',
     },
     database: {

@@ -22,6 +22,11 @@ build/Release
 # Dependency directory
 # Deployed apps should consider commenting this line out:
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+.DS_Store
 node_modules
+public/css/*
+public/js/bootstrap.js
+public/js/apps.js
 rsync_exclude.txt
 deploy
+public/assets/

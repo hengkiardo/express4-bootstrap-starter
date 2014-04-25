@@ -38,7 +38,7 @@ var server = http.createServer(app)
   });
 
 server.on('error', function (err) {
-  console.error('✗ '+ err);
+  console.error('✗ '+ app.get('port') + err);
   // TODO: do something with the error
 });
 

@@ -13,11 +13,11 @@ head(prefix="og: http://ogp.me/ns# express4-bootstrap-starter: http://ogp.me/ns/
   // Opengraph tags
   //- meta(property="fb:app_id", content="")
   //- meta(property="fb:admins", content="")
-  meta(property="og:title", content=pkg.app_name + ' - ' + title)
+  meta(property="og:title", content=pkg.name + ' - ' + title)
   meta(property="og:description", content=pkg.description)
   meta(property="og:url", content="")
   meta(property="og:image", content="")
-  meta(property="og:site_name", content="#{pkg.app_name}")
+  meta(property="og:site_name", content="#{pkg.name}")
 
   if NODE_ENV == 'development'
     link( rel="stylesheet" href="/css/bootstrap.css" type="text/css")

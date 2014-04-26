@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/aredo/express4-bootstrap-starter.png?label=ready&title=Ready)](https://waffle.io/aredo/express4-bootstrap-starter)
 ExpressJS 4 Starter
 ==========================
 

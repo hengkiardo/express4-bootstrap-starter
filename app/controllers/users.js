@@ -2,12 +2,11 @@
 /**
  * Module dependencies.
  */
-// module dependencies
-var User = require('../models/user');
-
-var mongoose   = require('mongoose')
-  , User       = mongoose.model('User')
-  , utils      = require('../helper/util')
+var User     = require('../models/user');
+var mongoose = require('mongoose');
+var User     = mongoose.model('User');
+var utils    = require('../helper/util');
+var async    = require('async');
 
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'
@@ -114,17 +113,33 @@ exports.show = function (req, res, next) {
  */
 
 exports.user_profile = function (req, res, next) {
-  if(!req.user) {
-    res.redirect('/')
-  } else {
+  var username = req.params.username;
 
-    user = req.user
+  async.waterfall([
+    function (callback) {
+      if ( username === req.user.username) {
+        callback(null, req.user)
+      } else {
+        User.findOne({username : username}, function(err, user) {
+          callback(err, user)
+        })
+      }
+    }], function (err, user) {
+      if (err) {
+        console.log(err)
+        return next(err)
+      }
+      if(!user) {
+        res.render('users/not-found', {
+          title: 'User with username `' + username + '` not found',
+        })
+      } else {
+        res.render('users/show', {
+          title: user.name,
+          user: user
+        })
+      }
 
-    res.render('users/show', {
-      title: user.name,
-      user: user
     })
-  }
-
 
 }

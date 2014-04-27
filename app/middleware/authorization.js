@@ -6,9 +6,6 @@
 var _ = require('lodash')
 
 exports.requiresLogin = function (req, res, next) {
-
-  console.log(req.isAuthenticated())
-
   if (req.isAuthenticated()) return next()
   if (req.method == 'GET') req.session.returnTo = req.originalUrl
   res.redirect('/login')

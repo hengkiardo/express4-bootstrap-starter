@@ -111,8 +111,8 @@ module.exports = function (app, express, passport) {
   app.use(function(req, res, next) {
       var err = new Error('Not Found');
       res.status(404).render('404', {
-        url: req.originalUrl,
-        error: 'Not found'
+        url: req.protocol + '://' + req.headers.host + req.originalUrl,
+        error: 'Page tot found !!!'
       })
   });
 

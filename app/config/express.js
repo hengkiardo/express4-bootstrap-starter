@@ -86,19 +86,12 @@ module.exports = function (app, express, passport) {
   // development error handler
   // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
     app.use(logger('dev'));
     app.use(errorHandler());
     app.use(responseTime());
     app.use(function(err, req, res, next) {
       res.status(err.status || 500);
-      res.render('error', {
+      res.render('500', {
           message: err.message,
           error: err
       });
@@ -127,7 +120,7 @@ module.exports = function (app, express, passport) {
   // no stacktraces leaked to user
   app.use(function(err, req, res, next) {
       res.status(err.status || 500);
-      res.render('error', {
+      res.render('500', {
           message: err.message,
           error: {}
       });

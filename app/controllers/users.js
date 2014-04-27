@@ -11,6 +11,7 @@ var async    = require('async');
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'
   delete req.session.returnTo
+  req.flash('success', { msg: 'Success! You are logged in.' });
   res.redirect(redirectTo)
 }
 
@@ -58,6 +59,7 @@ exports.signup = function (req, res) {
 
 exports.logout = function (req, res) {
   req.logout()
+  req.flash('success', { msg: 'Success! You are logout' });
   res.redirect('/')
 }
 
@@ -117,8 +119,14 @@ exports.user_profile = function (req, res, next) {
 
   async.waterfall([
     function (callback) {
-      if ( username === req.user.username) {
-        callback(null, req.user)
+      if(req.user) {
+        if (username === req.user.username) {
+          callback(null, req.user)
+        } else {
+          User.findOne({username : username}, function(err, user) {
+            callback(err, user)
+          })
+        }
       } else {
         User.findOne({username : username}, function(err, user) {
           callback(err, user)

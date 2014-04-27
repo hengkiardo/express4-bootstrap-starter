@@ -34,15 +34,6 @@ module.exports = function (app, passport) {
           return done(null, false, { message: 'Your email not register' })
         }
 
-        if(user.is_confirm === false) {
-          return done(null, false, { message: 'Your email not confirm yet' })
-        }
-
-        if(user.is_active === false) {
-          return done(null, false, { message: 'Your account not approved yet. Please Wait' })
-        }
-
-
         if (!user.authenticate(password)) {
           return done(null, false, { message: 'invalid login or password' })
         }
@@ -59,7 +50,10 @@ module.exports = function (app, passport) {
 
   passport.use(new TwitterStrategy(app.config.twitter, function(req, accessToken, tokenSecret, profile, done) {
     if (req.user) {
-      User.findOne({ $or: [{'twitter.id': profile.id }, { email: profile.username + "@twitter.com" }] }, function(err, existingUser) {
+      User.findOne({ $or: [
+            {'twitter.id': profile.id }
+          , { username: profile.username }
+          , { email: profile.username + "@twitter.com" }] }, function(err, existingUser) {
         if (existingUser) {
           req.flash('errors', { msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.' })
           done(err)
@@ -109,7 +103,11 @@ module.exports = function (app, passport) {
 
   passport.use(new FacebookStrategy(app.config.facebook, function(req, accessToken, refreshToken, profile, done) {
     if (req.user) {
-      User.findOne({ $or: [{ 'facebook.id' : profile.id }, { email: profile.email }] }, function(err, existingUser) {
+      User.findOne({ $or: [
+            { 'facebook.id' : profile.id }
+          , { username : profile.username}
+          , { email: profile.email }] }
+          , function(err, existingUser) {
         if (existingUser) {
           req.flash('errors', { msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
           done(err);

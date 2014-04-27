@@ -13,7 +13,8 @@ var logger         = require('morgan')
   , env            = process.env.NODE_ENV || 'development'
   , views_helpers  = require('../helper/views-helper')
   , pkg            = require('../../package.json')
-  , flash          = require('connect-flash')
+  // , flash          = require('connect-flash')
+  , flash          = require('express-flash')
   , routes         = require('../routes')
   , utility        = require('utility')
   , _              = require('lodash')
@@ -76,8 +77,9 @@ module.exports = function (app, express, passport) {
 
     next()
   });
-  app.use(flash());
+
   app.use(views_helpers(pkg.name));
+  app.use(flash());
 
     /** ROUTES Apps */
   app.use(routes.index)

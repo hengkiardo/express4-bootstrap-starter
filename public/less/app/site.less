@@ -20,6 +20,15 @@ body {
   padding: 0 0 140px;
 }
 
+#flash-message {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+  z-index: 9999;
+}
+
 footer {
   font-size: 12px;
   padding-top: 40px;
@@ -27,10 +36,56 @@ footer {
   height: 100px;
 }
 
+.btn {
+  &-twitter, &-facebook {
+    margin: 0 auto;
+    display: block;
+    color: #fff;
+    width: 250px;
+    text-align: left;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+  &-twitter {
+    background: #55acee;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    .box-shadow(0px 5px 0px darken(#55acee, 13%));
+
+    &:hover {
+      background: darken(#55acee, 8%);
+    }
+    &:active {
+      background: darken(#55acee, 11%);
+      .box-shadow(0px 3px 0px darken(#55acee, 13%));
+    }
+  }
+  &-facebook {
+    background: #3b5998;
+    margin-bottom: 30px;
+    .box-shadow(0px 5px 0px darken(#3b5998, 13%));
+
+    &:hover {
+      background: darken(#3b5998, 8%);
+    }
+    &:active {
+      background: darken(#3b5998, 11%);
+      .box-shadow(0px 3px 0px darken(#3b5998, 13%));
+    }
+  }
+}
+
 .form-signin {
   max-width: 375px;
   padding: 15px;
   margin: 0 auto;
+
+  .alert {
+    width: 315px;
+    margin: 0 auto;
+  }
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -71,25 +126,6 @@ footer {
   margin: 0 auto 20px;
 }
 
-.form-signin .btn-twitter {
-  color: #ffffff;
-  text-align: left;
-  width: 165px;
-  float: left;
-  padding-left: 10px;
-  background-color: #55acee;
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-.form-signin .btn-facebook {
-  color: #ffffff;
-  text-align: left;
-  width: 170px;
-  float: right;
-  padding-left: 10px;
-  background-color: #3b5998;
-  border-color: rgba(0, 0, 0, 0.2);
-}
 
 .avatar{
   position: relative;

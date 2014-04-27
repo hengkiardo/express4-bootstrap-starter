@@ -15,6 +15,8 @@ var logger         = require('morgan')
   , pkg            = require('../../package.json')
   , flash          = require('connect-flash')
   , routes         = require('../routes')
+  , utility        = require('utility')
+  , _              = require('lodash')
 
 module.exports = function (app, express, passport) {
 
@@ -41,7 +43,6 @@ module.exports = function (app, express, passport) {
   // Express use middlewares
   app
     .use(favicon(path.join(app.config.root, 'public/favicon.ico')))
-    .use(express.static(path.join(app.config.root, 'public')))
     .use(bodyParser())
     .use(multer())
     .use(methodOverride())
@@ -63,69 +64,72 @@ module.exports = function (app, express, passport) {
     maxAge: new Date(Date.now() + 3600000)
   }))
 
-  app
-    .use(function (req, res, next) {
-      res.locals.pkg      = pkg
-      res.locals.NODE_ENV = env
-      next()
-    })
-    .use(flash())
-    .use(views_helpers(pkg.name))
+  app.use(express.static(path.join(app.config.root, 'public')))
+  app.use(function (req, res, next) {
+    res.locals.pkg      = pkg
+    res.locals.NODE_ENV = env
+
+    if(_.isObject(req.user)) {
+      res.locals.user_email_hash = utility.md5(req.user.email)
+      res.locals.User = req.user
+    }
+
+    next()
+  });
+  app.use(flash());
+  app.use(views_helpers(pkg.name));
 
     /** ROUTES Apps */
   app.use(routes.index)
   app.use(routes.user)
 
-  app
-    .use(function(err, req, res, next){
-      // treat as 404
-      if (err.message
-        && (~err.message.indexOf('not found')
-        || (~err.message.indexOf('Cast to ObjectId failed')))) {
-        return next()
-      }
-      // log it
-      // send emails if you want
-      console.error(err.stack)
-      // error page
-      res.status(500).render('500', { error: err.stack })
-    })
-    .use(function(req, res, next){
+  // development error handler
+  // will print stacktrace
+  if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+    app.use(logger('dev'));
+    app.use(errorHandler());
+    app.use(responseTime());
+    app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+          message: err.message,
+          error: err
+      });
+    });
+  } else {
+    app.use(logger());
+    app.use(compression({
+      filter: function (req, res) {
+        return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
+      },
+      level: 9
+    }))
+  }
+  // error handlers
+
+  // catch 404 and forwarding to error handler
+  app.use(function(req, res, next) {
+      var err = new Error('Not Found');
       res.status(404).render('404', {
         url: req.originalUrl,
         error: 'Not found'
       })
-    })
+  });
 
-  if(env === 'development') {
-
-    app
-      .use(logger('dev'))
-      .use(errorHandler())
-      .use(responseTime())
-
-  } else {
-
-    app
-      .use(logger())
-      .use(compression({
-        filter: function (req, res) {
-          return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
-        },
-        level: 9
-      }))
-      .use(function logErrors(err, req, res, next){
-
-        if (err.status === 404) {
-          return next(err)
-        }
-
-        if (err.logError === false) {
-          return next(err)
-        }
-
-        console.error(err.stack)
-        next(err)
-      })
-  }
+  // production error handler
+  // no stacktraces leaked to user
+  app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+          message: err.message,
+          error: {}
+      });
+  });
 }

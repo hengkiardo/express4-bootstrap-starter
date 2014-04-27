@@ -102,7 +102,6 @@ exports.create = function (req, res, next) {
 
 exports.show = function (req, res, next) {
   user = req.user
-  console.log(user)
   res.render('users/show', {
     title: user.name,
     user: user

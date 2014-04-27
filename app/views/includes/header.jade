@@ -13,7 +13,13 @@ div.navbar.navbar-default.navbar-fixed-top(role='navigation')
       ul.nav.navbar-nav.navbar-right
         - if (req.isAuthenticated())
           li.dropdown
-            a(href="#" class="dropdown-toggle" data-toggle="dropdown") My Account &nbsp;
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+              span.thumb-sm.avatar.pull-left
+                if User.photo_profile
+                  img(src=User.photo_profile, height=30, width=30)
+                else
+                  img(src='https://gravatar.com/avatar/#{user_email_hash}', height=30, width=30)
+              | #{req.user.username} &nbsp;
               b.caret
             ul.dropdown-menu
               li

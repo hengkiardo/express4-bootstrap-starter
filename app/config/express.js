@@ -42,7 +42,7 @@ module.exports = function (app, express, passport) {
 
   // Express use middlewares
   app
-    .use(favicon(path.join(app.config.root, 'public/favicon.ico')))
+    .use(favicon(path.join(app.config.root, 'public/favicon.png')))
     .use(bodyParser())
     .use(multer())
     .use(methodOverride())

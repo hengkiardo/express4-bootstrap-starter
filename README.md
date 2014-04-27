@@ -1,5 +1,8 @@
+![ExpressJS 4 Starter](http://express4-bootstrap-starter.tukangslicing.net/apple-touch-icon-114-precomposed.png)
+
 ExpressJS 4 Starter
 ==========================
+
 
 A simple demo app in Node.js using expressJS 4, Mongoose, Passport.js and Jade for Beginners
 

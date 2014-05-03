@@ -16,7 +16,6 @@ var logger         = require('morgan')
   // , flash          = require('connect-flash')
   , flash          = require('express-flash')
   , routes         = require('../routes')
-  , utility        = require('utility')
   , _              = require('lodash')
 
 module.exports = function (app, express, passport) {
@@ -71,7 +70,6 @@ module.exports = function (app, express, passport) {
     res.locals.NODE_ENV = env
 
     if(_.isObject(req.user)) {
-      res.locals.user_email_hash = utility.md5(req.user.email)
       res.locals.User = req.user
     }
 

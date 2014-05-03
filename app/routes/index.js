@@ -8,7 +8,9 @@ var fs = require('fs');
 
 var userController = require(config.root + '/app/controllers/users');
 var trickController = require(config.root + '/app/controllers/tricks');
-var userController = require(config.root + '/app/controllers/API/tricks');
+
+var API = {}
+API.tricks = require(config.root + '/app/controllers/API/tricks');
 
 Route.get('/', function(req, res) {
   res.render('index', {

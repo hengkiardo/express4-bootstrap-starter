@@ -6,7 +6,7 @@ var errorHelper = require('mongoose-error-helper').errorHelper;
 /**
  * Create an Tricks
  */
-exports. = function (req, res, next) {
+exports.create = function (req, res, next) {
   var trick = new Trick(req.body)
   trick.user = req.user
 

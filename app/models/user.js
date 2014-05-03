@@ -3,11 +3,11 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-  , Schema = mongoose.Schema
-  , CreateUpdatedAt = require('mongoose-timestamp')
-  , crypto = require('crypto')
-  , oAuthTypes = ['twitter', 'facebook', 'google']
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema
+var CreateUpdatedAt = require('mongoose-timestamp');
+var crypto = require('crypto');
+var oAuthTypes = ['twitter', 'facebook', 'google'];
 /**
  * User Schema
  */

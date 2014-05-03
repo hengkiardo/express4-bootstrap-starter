@@ -5,7 +5,6 @@
 var User     = require('../models/user');
 var mongoose = require('mongoose');
 var User     = mongoose.model('User');
-var utils    = require('../helper/util');
 var async    = require('async');
 
 var login = function (req, res) {

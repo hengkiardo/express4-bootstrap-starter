@@ -30,3 +30,4 @@ public/js/apps.js
 rsync_exclude.txt
 deploy
 public/assets/
+public/screenshot/

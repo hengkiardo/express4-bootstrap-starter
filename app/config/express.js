@@ -82,8 +82,7 @@ module.exports = function (app, express, passport) {
   app.use(flash());
 
     /** ROUTES Apps */
-  app.use(routes.index)
-  app.use(routes.user)
+  app.use(routes)
 
   // development error handler
   // will print stacktrace
@@ -114,7 +113,7 @@ module.exports = function (app, express, passport) {
       var err = new Error('Not Found');
       res.status(404).render('404', {
         url: req.protocol + '://' + req.headers.host + req.originalUrl,
-        error: 'Page tot found !!!'
+        error: 'Page not found !!!'
       })
   });
 

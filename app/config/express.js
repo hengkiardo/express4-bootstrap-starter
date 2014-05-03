@@ -16,7 +16,6 @@ var logger         = require('morgan')
   // , flash          = require('connect-flash')
   , flash          = require('express-flash')
   , routes         = require('../routes')
-  , utility        = require('utility')
   , _              = require('lodash')
 
 module.exports = function (app, express, passport) {
@@ -71,7 +70,6 @@ module.exports = function (app, express, passport) {
     res.locals.NODE_ENV = env
 
     if(_.isObject(req.user)) {
-      res.locals.user_email_hash = utility.md5(req.user.email)
       res.locals.User = req.user
     }
 
@@ -82,8 +80,7 @@ module.exports = function (app, express, passport) {
   app.use(flash());
 
     /** ROUTES Apps */
-  app.use(routes.index)
-  app.use(routes.user)
+  app.use(routes)
 
   // development error handler
   // will print stacktrace
@@ -114,7 +111,7 @@ module.exports = function (app, express, passport) {
       var err = new Error('Not Found');
       res.status(404).render('404', {
         url: req.protocol + '://' + req.headers.host + req.originalUrl,
-        error: 'Page tot found !!!'
+        error: 'Page not found !!!'
       })
   });
 

@@ -3,11 +3,11 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-  , Schema = mongoose.Schema
-  , CreateUpdatedAt = require('mongoose-timestamp')
-  , crypto = require('crypto')
-  , oAuthTypes = ['twitter', 'facebook', 'google']
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema
+var CreateUpdatedAt = require('mongoose-timestamp');
+var crypto = require('crypto');
+var oAuthTypes = ['twitter', 'facebook', 'google'];
 /**
  * User Schema
  */
@@ -185,6 +185,17 @@ UserSchema.methods = {
     var admin_level = 1
 
     return admin_level
+  },
+
+  gravatar: function(size) {
+    if (!size) size = 200;
+
+    if (!this.email) {
+      return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
+    }
+
+    var md5 = require('crypto').createHash('md5').update(this.email).digest('hex');
+    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
   },
 
 

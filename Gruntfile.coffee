@@ -72,6 +72,7 @@ module.exports = (grunt) ->
         report: "min"
         compress:
           dead_code: true
+          drop_console: true
       # wrap: true,
       # sourceMap: true
       main_script:

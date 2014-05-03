@@ -18,7 +18,7 @@ div.navbar.navbar-default.navbar-fixed-top(role='navigation')
                 if User.photo_profile
                   img(src=User.photo_profile, height=30, width=30)
                 else
-                  img(src='https://gravatar.com/avatar/#{user_email_hash}', height=30, width=30)
+                  img(src="#{User.gravatar()}", height=30, width=30)
               | #{req.user.username} &nbsp;
               b.caret
             ul.dropdown-menu

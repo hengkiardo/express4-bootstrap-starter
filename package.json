@@ -56,7 +56,8 @@
     "utility": "^0.1.13",
     "phantom-render-stream": "^0.3.3",
     "mongoose-types": "^1.0.3",
-    "mongoose-error-helper": "0.0.2"
+    "mongoose-error-helper": "0.0.2",
+    "url-to-screenshot": "^0.4.1"
   },
   "devDependencies": {
     "mocha": "^1.18.2",

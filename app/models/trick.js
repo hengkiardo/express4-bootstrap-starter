@@ -8,7 +8,6 @@ var Schema = mongoose.Schema;
 var CreateUpdatedAt = require('mongoose-timestamp');
 var slug = require('mongoose-slug');
 var mongooseTypes = require("mongoose-types");
-// var useTimestamps = mongooseTypes.useTimestamps;
 
 mongooseTypes.loadTypes(mongoose, "url");
 
@@ -47,7 +46,7 @@ var Trick = new Schema({
 });
 
 Trick.plugin(slug('title'));
-// Trick.plugin(useTimestamps);
+Trick.plugin(CreateUpdatedAt);
 
 Trick.methods = {
 

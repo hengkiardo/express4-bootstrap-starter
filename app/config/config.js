@@ -15,7 +15,7 @@ var config = {
     database: {
       url: 'mongodb://localhost/express4_bootstrap_starter'
     },
-    BaseApiURL : 'http://localhost:3001/api/v1/',
+    BaseApiURL : 'http://localhost:3001/api/',
     root     : rootPath,
     app      : {
       name : 'Express4-Bootstrap-Starter'
@@ -46,7 +46,7 @@ var config = {
     database: {
       url: process.env.MONGODB_CONNECTION_URI || 'mongodb://localhost/express4_bootstrap_starter'
     },
-    BaseApiURL : 'http://localhost:3001/api/v1/',
+    BaseApiURL : 'http://localhost:3001/api/',
     root     : rootPath,
     app      : {
       name : 'BlastBoom - Email and SMS Blasting'

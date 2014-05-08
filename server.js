@@ -41,5 +41,4 @@ server.on('error', function (err) {
   console.error('✗ '+ app.get('port') + err);
   // TODO: do something with the error
 });
-
 module.exports = app;

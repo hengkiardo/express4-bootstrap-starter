@@ -1,12 +1,12 @@
 html,
 body {
   height: 100%;
+  font-family: "Open Sans", @font-family-sans-serif;
 }
 
 body {
   padding-top: 70px;
-  // padding-bottom: 40px;
-  // background-color: #fff;
+  background: #fafafa
 }
 .navbar-brand {
   padding: 0 15px;
@@ -126,77 +126,21 @@ footer {
   margin: 0 auto 20px;
 }
 
-
-.avatar{
-  position: relative;
-  display: block;
-  border-radius: 500px;
-  white-space: nowrap;
-  margin-top: -5px;
-  margin-right: 5px;
-
-  img{
-    border-radius: 500px;
-    width: 100%;
-  }
-  i{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 10px;
-    height: 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 100%;
-    &.md{
-      width: 12px;
-      height: 12px;
-      margin: 1px;
-    }
-    &.right{
-      left: auto;
-      right: 0;
-    }
-    &.bottom{
-      left: auto;
-      top: auto;
-      bottom: 0;
-      right: 0;
-    }
-    &.on{
-      background-color: @brand-success;
-    }
-    &.off{
-      background-color: @text-muted;
-    }
-    &.busy{
-      background-color: @brand-danger;
-    }
-    &.away{
-      background-color: @brand-warning;
+form {
+  label {
+    &.error {
+      font-weight: normal;
+      font-size: @font-size-sm;
+      margin-top: 3px;
+      color: @error-color;
     }
   }
 }
 
-.thumb-lg{width: 128px;display: inline-block}
-.thumb-md{width: 64px;display: inline-block}
-.thumb{width: 50px;display: inline-block}
-.thumb-sm{width: 34px;display: inline-block}
-.thumb-xs{width: 24px;display: inline-block}
-.thumb-wrapper{padding: 2px; border: 1px solid #ddd}
-.thumb img,
-.thumb-xs img,
-.thumb-sm img,
-.thumb-md img,
-.thumb-lg img,
-.thumb-btn img{
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-}
-.img-full{
-  max-width: 100%;
-  > img{
-    max-width: 100%;
+.block-tricks-user {
+  .thumb-btn {
+    height: 250px;
+    display: block;
+    overflow-y: hidden;
   }
 }

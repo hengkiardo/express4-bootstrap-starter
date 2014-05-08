@@ -1,0 +1,19 @@
+extends ../layouts/default
+
+block main
+  div
+    h2.page-title.m-t-none.pull-left My Trick
+    a.btn.btn-primary.pull-right(href="/trick/create" title="Create New Trick") Create New
+    .clearfix
+
+    section.block-tricks-user
+      if tricks_user
+        each trick, idx in tricks_user.tricks
+          .col-lg-3.pad-none.m-r-sm.b
+            figure.thumb-btn
+              img(src="/screenshot/#{trick.screenshot}")
+            .panel-body
+              h4
+                a(href="#{trick.origin_url}", target="_blank") #{ trick.title }
+
+      .clearfix

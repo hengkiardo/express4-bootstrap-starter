@@ -55,8 +55,15 @@ module.exports = (grunt) ->
       apps:
         src: [
           "public/js/apps/home.js"
+          "public/js/apps/trick.js"
         ]
         dest: "public/js/apps.js"
+
+      plugins:
+        src: [
+          "public/js/plugins/**.js"
+        ]
+        dest: "public/js/plugins.js"
 
     jshint:
       options:
@@ -77,8 +84,9 @@ module.exports = (grunt) ->
       # sourceMap: true
       main_script:
         src: [
-          "public/js/apps.js"
           "<%= concat.bootstrap.dest %>"
+          "public/js/plugins.js"
+          "public/js/apps.js"
         ]
         dest: "public/assets/js/apps.min.js"
 

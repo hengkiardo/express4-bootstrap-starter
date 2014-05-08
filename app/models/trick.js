@@ -1,4 +1,6 @@
-var screenshot = require('url-to-screenshot');
+var phantom = require('phantom-render-stream');
+var screenshot = phantom();
+
 var fs = require('fs');
 var config = require('../config/config');
 var crypto = require('crypto');
@@ -15,7 +17,9 @@ var Trick = new Schema({
     title: {
       type: String,
       required: true,
-      unique: true
+      index : {
+        unique: true
+      }
     },
     user: {
       type : Schema.ObjectId,
@@ -30,7 +34,10 @@ var Trick = new Schema({
       type: String
     },
     origin_url: {
-      type: mongoose.SchemaTypes.Url
+      type: mongoose.SchemaTypes.Url,
+      index: {
+        unique : true
+      }
     },
     screenshot: {
       type: String
@@ -60,8 +67,6 @@ Trick.methods = {
 
   screenShoot: function (url, cb) {
 
-    console.log(url)
-
     if (!url || !url.length) return this.save(cb)
 
     var self = this;
@@ -70,32 +75,25 @@ Trick.methods = {
 
       if (err) return cb(err);
 
-      var makeSalt = Math.round((new Date().valueOf() * Math.random())) + ''
+      var opts = {
+          format:'png'
+        , width: 1280
+        , height: 960
+      }
 
-      var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex')
+      var makeSalt = Math.round((new Date().valueOf() * Math.random())) + '';
 
-      screenshot(url)
-          .width(1280)
-          .height(800)
-          .capture(function(err, img) {
+      var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
 
-            console.log(self)
+      var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
 
-            if (err) {
+      screenshot(url, opts )
+        .pipe(fs.createWriteStream(location_screenshoot));
 
-              self.save(cb)
+      self.screenshot = hasFileName + '.' + opts.format;
 
-              throw err;
+      self.save(cb)
 
-            } else {
-
-              fs.writeFile(config.root + '/public/screenshot/' + hasFileName + '.png', img);
-
-              self.screenshot = hasFileName + '.png';
-
-              self.save(cb)
-            }
-          });
     })
   },
 }

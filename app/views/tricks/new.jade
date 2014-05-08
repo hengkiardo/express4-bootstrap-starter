@@ -3,7 +3,7 @@ extends ../layouts/default
 block main
   .row
     .col-md-8
-      form.form-horizontal(method="post", action='/trick/create', role="form")
+      form.form-horizontal.new-trick(method="post", action='/trick/create', role="form")
 
         .form-group
           label.col-sm-2.control-label(for='title') Trick Title
@@ -11,14 +11,14 @@ block main
             input.form-control#title(type='text', name="title", value=trick.title, placeholder='Enter the title')
 
         .form-group
-          label.col-sm-2.control-label(for='file') Original Url
+          label.col-sm-2.control-label(for='origin_url') Original Url
           .col-sm-10
-            input.form-control#title(type='text', name="title", value=trick.origin_url, placeholder='Enter the url')
+            input.form-control#origin_url(type='text', name="origin_url", value=trick.origin_url, placeholder='Enter the url')
 
         .form-group
-          label.col-sm-2.control-label(for='desc') Description
+          label.col-sm-2.control-label(for='description') Description
           .col-sm-10
-            textarea.form-control#desc(rows="5", name="body", placeholder='Give detailed description of the trick')=trick.body
+            textarea.form-control#desc(rows="5", name="description", placeholder='Give detailed description of the trick')=trick.description
 
         .form-group
           label.col-sm-2.control-label(for='tags') Tags
@@ -27,6 +27,8 @@ block main
 
         .form-group
           .col-sm-offset-2.col-sm-10
-            button.btn.btn-primary(type='submit') Save
-            | &nbsp;
-            a.btn(href='/articles', title="cancel") Cancel
+            button.m-r-md.btn.btn-primary(type='submit')
+              i.fa.fa-save.text
+                span.m-l-xs.text Save Trick
+
+            a.btn(href='/trick/me', title="cancel") Cancel

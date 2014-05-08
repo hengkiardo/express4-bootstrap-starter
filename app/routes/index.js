@@ -3,7 +3,7 @@ var Route = express.Router();
 var config = require('../config/config');
 var passport = require('passport');
 var lodash = require('lodash')
-var auth = require(config.root + '/app/middleware/authorization');
+var Auth = require(config.root + '/app/middleware/authorization');
 var fs = require('fs');
 
 var userController = require(config.root + '/app/controllers/users');
@@ -18,14 +18,17 @@ Route.get('/', function(req, res) {
   });
 });
 
-Route.get('/trick/create', trickController.create)
+// API Routes
+Route.all('/api/*', Auth.APIrequiresUserLogin)
+Route.post('/api/trick/create', API.tricks.create)
+Route.get('/api/trick/tricks-user', API.tricks.listTrickByUser)
 
-// user routes
+// Frontend routes
 Route.get('/login', userController.login)
 Route.get('/signup', userController.signup)
 Route.get('/logout', userController.logout)
 Route.post('/users/create', userController.create)
-Route.get('/dashboard', auth.requiresLogin, userController.show)
+Route.get('/dashboard', Auth.requiresLogin, userController.show)
 Route.post('/users/session',
   passport.authenticate('local', {
     failureRedirect: '/login',
@@ -45,6 +48,10 @@ Route.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email',
 Route.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), function(req, res) {
     res.redirect(req.session.returnTo || '/');
   })
+
+Route.get('/trick/create', Auth.requiresLogin, trickController.create)
+Route.get('/:username/tricks', Auth.requiresLogin, trickController.myTrick)
+
 Route.get('/:username', userController.user_profile)
 
 module.exports = Route

@@ -25,3 +25,21 @@ exports.user = {
     next()
   }
 }
+
+/*
+ *  authorization routing middleware if user has login
+ */
+exports.APIrequiresUserLogin = function (req, res, next) {
+
+  var is_login = req.headers['is_login']
+
+  if( req.isAuthenticated() || is_login ) {
+    return next()
+  } else {
+    var errPrint     = {}
+    errPrint.status  = 403
+    errPrint.message = "Unauthorized, need user session to access this route"
+
+    return res.json(200, errPrint)
+  }
+}

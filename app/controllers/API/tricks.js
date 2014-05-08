@@ -22,3 +22,18 @@ exports.create = function (req, res, next) {
     }
   })
 }
+
+exports.listTrickByUser = function( req, res, next) {
+
+  var user_id = req.query.user_id
+
+  Trick.find({user : user_id})
+    .sort({createdAt: -1})
+    .exec(function(err, tricks) {
+      var resultPrint     = {}
+      resultPrint.status  = 200
+      resultPrint.message = 'success'
+      resultPrint.data    = tricks
+      return res.json(200, resultPrint)
+    })
+}

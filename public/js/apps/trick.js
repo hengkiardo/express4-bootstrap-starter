@@ -38,8 +38,18 @@ var Trick = {
           dataType : "json",
           data     : $(form).serialize()
         })
-        .done(function(res) {
-          console.log('done')
+        .fail(function(res) {
+          Notifier.show(res.responseJSON.message, 'err');
+        })
+        .always(function(res) {
+          Notifier.show("Your Tricks success created");
+
+          formNewTrick.find('input[type=text]').val('');
+          formNewTrick.find('textarea').val('');
+
+          setTimeout(function() {
+            window.location.href = App.BaseUrl + '/' + App.User.session.username+ '/tricks'
+          }, 5000);
         });
       }
     });

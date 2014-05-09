@@ -37,9 +37,6 @@ exports.myTrick = function (req, res) {
           tricks : Data.data
         , count : _.size(Data.data)
       }
-
-      console.log(tricks_user);
-
       res.render('tricks/tricks-user', {
         title: 'My Trick',
         tricks_user : tricks_user

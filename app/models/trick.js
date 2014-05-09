@@ -1,9 +1,12 @@
-var phantom = require('phantom-render-stream');
-var screenshot = phantom();
+// var phantom = require('phantom-render-stream');
+// var screenshot = phantom();
+//
+var screenshot = require('url-to-screenshot');
 
 var fs = require('fs');
 var config = require('../config/config');
 var crypto = require('crypto');
+var request = require('request');
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -81,18 +84,51 @@ Trick.methods = {
         , height: 960
       }
 
-      var makeSalt = Math.round((new Date().valueOf() * Math.random())) + '';
+      // request(url, function (error, response, body) {
 
-      var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
+        // if (!error && response.statusCode == 200) {
 
-      var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
+          var makeSalt = Math.round((new Date().valueOf() * Math.random())) + '';
 
-      screenshot(url, opts )
-        .pipe(fs.createWriteStream(location_screenshoot));
+          var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
 
-      self.screenshot = hasFileName + '.' + opts.format;
+          var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
 
-      self.save(cb)
+          // var outputStream = fs.createWriteStream(location_screenshoot);
+
+          screenshot(url)
+            .width(1280)
+            .height(800)
+            .capture(function(err, img) {
+              if (err) {
+                console.log(err)
+              }
+
+              fs.writeFile(location_screenshoot, img);
+
+
+              self.screenshot = hasFileName + '.' + opts.format;
+              self.save(cb);
+            });
+
+
+          // screenshot(url, opts )
+          //   .pipe(outputStream)
+          //   .pipe(process.stdout);
+
+          // // outputStream.on('finish', function (data) {
+
+          //   // console.log('data');
+
+          //   self.screenshot = hasFileName + '.' + opts.format;
+
+          //   self.save(cb)
+
+          // // });
+
+        // }
+
+      // })
 
     })
   },

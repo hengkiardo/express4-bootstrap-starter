@@ -31,3 +31,6 @@ rsync_exclude.txt
 deploy
 public/assets/
 public/screenshot/
+public/js/plugins.js
+public/js/apps.js
+public/js/bootstrap.js

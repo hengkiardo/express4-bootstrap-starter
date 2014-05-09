@@ -1,3 +1,7 @@
+if req.user
+  script.
+    var isLogin = true
+
 if NODE_ENV == 'development'
   script.
     window.jQuery || document.write('<script src="/js/libs/jquery-2.1.0.min.js"><\/script>')

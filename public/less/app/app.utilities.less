@@ -192,6 +192,54 @@
 .pad-t-n{padding-left: 0}
 .pad-b-n{padding-left: 0}
 
+.avatar{
+  position: relative;
+  display: block;
+  border-radius: 500px;
+  white-space: nowrap;
+  img{
+    border-radius: 500px;
+    width: 100%;
+  }
+  i{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 100%;
+    &.md{
+      width: 12px;
+      height: 12px;
+      margin: 1px;
+    }
+    &.right{
+      left: auto;
+      right: 0;
+    }
+    &.bottom{
+      left: auto;
+      top: auto;
+      bottom: 0;
+      right: 0;
+    }
+    &.on{
+      background-color: @brand-success;
+    }
+    &.off{
+      background-color: @text-muted;
+    }
+    &.busy{
+      background-color: @brand-danger;
+    }
+    &.away{
+      background-color: @brand-warning;
+    }
+  }
+}
+
 .thumb-lg{width: 128px;display: inline-block}
 .thumb-md{width: 64px;display: inline-block}
 .thumb{width: 50px;display: inline-block}

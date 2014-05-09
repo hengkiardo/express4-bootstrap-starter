@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var User     = require('../models/user');
+// var User     = require('../models/user');
 var mongoose = require('mongoose');
 var User     = mongoose.model('User');
 var async    = require('async');

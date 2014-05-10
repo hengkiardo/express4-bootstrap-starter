@@ -30,16 +30,13 @@ exports.import = function (req, res, next) {
         };
 
         var add_date = moment.unix(_.parseInt($(this).attr('add_date')));
-
         newTrick.createdAt = new Date(add_date).toISOString();
-
         var trick = new Trick(newTrick);
-        // console.log(trick);
 
         if(Validator.isURL(newTrick.origin_url) && !Validator.isNull(newTrick.title )) {
           trick.save(function(err) {
             if (err) {
-              // console.log(err)
+              console.log(err)
             }
           });
         }

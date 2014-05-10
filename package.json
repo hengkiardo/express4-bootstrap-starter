@@ -70,7 +70,8 @@
     "grunt-contrib-jshint": "^0.8.0",
     "grunt-contrib-less": "^0.9.0",
     "validator": "^3.12.0",
-    "moment": "^2.6.0"
+    "moment": "^2.6.0",
+    "multipart": "^0.1.5"
   },
   "devDependencies": {
     "mocha": "^1.18.2",

@@ -11,6 +11,7 @@ var trickController = require(config.root + '/app/controllers/tricks');
 
 var API = {}
 API.tricks = require(config.root + '/app/controllers/API/tricks');
+API.Uploader = require(config.root + '/app/controllers/API/uploader');
 API.Users = require(config.root + '/app/controllers/API/users');
 
 Route.get('/', function(req, res) {
@@ -24,6 +25,7 @@ Route
   .all('/api/*', Auth.APIrequiresUserLogin)
   .post('/api/trick/create', API.tricks.create)
   .get('/api/trick/tricks-user', API.tricks.listTrickByUser)
+  .post('/api/trick/import', API.Uploader.import)
   .get('/api/screenshoot', API.tricks.screenShootUrl)
   .get('/api/user/current', API.Users.get_profile)
 

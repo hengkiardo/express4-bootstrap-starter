@@ -7,6 +7,7 @@ $(function() {
 var Trick = {
   init: function() {
     Trick.createNewTrick();
+    Trick.importBookmark();
   },
   tricksByUser: function() {
 
@@ -53,5 +54,36 @@ var Trick = {
         });
       }
     });
-  } // end of createNewTrick
+  }, // end of createNewTrick
+  importBookmark: function() {
+    var prgressBar = Trick.progressBarDOM();
+    $('footer').after(prgressBar);
+
+    $('#fileupload').fileupload({
+        url: App.API_BaseUrl + '/trick/import',
+        dataType: 'json',
+        done: function (e, data) {
+          var res = data.result;
+
+          if(res.status == 200) {
+
+          } else {
+            Notifier.show(res.message, err);
+          }
+
+          setTimeout(function(){
+            $('#progress').fadeOut();
+          }, 3000);
+
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css( 'width', progress + '%');
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+  },
+  progressBarDOM : function() {
+    return '<div id="progress" class="progress progress-xs progress-striped"><div data-toggle="tooltip" class="progress-bar bg-info lter"></div></div>';
+  }
 }

@@ -13,7 +13,7 @@ module.exports = function (app, mongoose) {
 
   // Error handler
   mongoose.connection.on('error', function (err) {
-    console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.\n' + err);
+    console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running. -> ' + err);
   })
 
   // Reconnect when closed

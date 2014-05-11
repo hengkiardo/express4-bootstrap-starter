@@ -4,7 +4,7 @@ ExpressJS 4 Starter
 ==========================
 
 
-A simple demo app in Node.js using expressJS 4, Mongoose, Passport.js and Jade for Beginners
+Lightweight Bootstrap NodeJS Apps Build Using ExpressJS 4, MongoDB/Mongoose, Authentication with Passport.js, Jade and GruntJS as Task Automation
 
 [![Build Status](https://travis-ci.org/aredo/express4-bootstrap-starter.svg?branch=master)](https://travis-ci.org/aredo/express4-bootstrap-starter)
 [![Dependencies Status](https://david-dm.org/aredo/express4-bootstrap-starter.png)](https://david-dm.org/aredo/express4-bootstrap-starter)

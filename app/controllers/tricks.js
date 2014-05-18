@@ -9,7 +9,7 @@ var _ = require('lodash');
  * New Trick
  */
 
-exports.create = function(req, res){
+exports.create = function(req, res) {
   res.render('tricks/new', {
     title: 'New Trick',
     trick: new Trick({})

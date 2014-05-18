@@ -36,10 +36,22 @@ exports.create = function (req, res, next) {
 
 exports.listTrickByUser = function( req, res, next) {
 
-  var user_id = req.query.user_id
+  var user_id = req.query.user_id;
 
-  Trick.find({user : user_id})
+  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
+  var perPage = 30;
+  var options = {
+    user : user_id,
+    perPage: perPage,
+    page: page
+  };
+
+  var condition = options || {};
+
+  Trick.find()
     .sort({createdAt: -1})
+    .skip(options.perPage * options.page)
+    .limit(options.perPage)
     .exec(function(err, tricks) {
       var resultPrint     = {}
       resultPrint.status  = 200

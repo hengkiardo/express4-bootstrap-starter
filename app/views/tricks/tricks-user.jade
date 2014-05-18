@@ -5,20 +5,12 @@ block main
     h2.page-title.m-t-none.pull-left My Trick
     .pull-right
       span.btn.btn-success.fileinput-button.m-r-sm
-        i.fa.fa-plus
-        span.m-l-xs Select files...
+        i.i.i-file-xml
+        span.m-l-xs Import Trick Bookmarks...
         input(id="fileupload" type="file" name="files")
       a.btn.btn-primary.pull-right(href="/trick/create" title="Create New Trick") Create New
     .clearfix
 
-    section.block-tricks-user
-      if tricks_user
-        each trick, idx in tricks_user.tricks
-          .col-lg-3.pad-none.m-r-sm.b
-            figure.thumb-btn
-              img(src="/api/screenshoot?origin_url=#{trick.origin_url}")
-            .panel-body
-              h4
-                a(href="#{trick.origin_url}", target="_blank") #{ trick.title }
+    section.block-tricks-user(data-id="#{User._id}", data-username="#{User.username}")
 
       .clearfix

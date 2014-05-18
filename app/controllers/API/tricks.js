@@ -1,13 +1,12 @@
+var config = require('../../config/config');
 var mongoose = require('mongoose');
 var Trick = mongoose.model('Trick');
-var errorHelper = require('mongoose-error-helper').errorHelper;
-// var phantom = require('phantom-render-stream');
-// var screenshotStream = phantom();
+var errorHelper = require(config.root + '/app/helper/errors');
 var screenshot = require('url-to-screenshot');
-var config = require('../../config/config');
 var crypto = require('crypto');
 var request = require('request');
 var fs = require('fs');
+var _ = require('lodash');
 
 /**
  * Create an Tricks
@@ -28,20 +27,18 @@ exports.create = function (req, res, next) {
       } else {
         errPrint.message = err.message
       }
+
       errPrint.data    = err.errors
       return res.send(400, errPrint)
     }
   })
 }
 
-exports.listTrickByUser = function( req, res, next) {
-
-  var user_id = req.query.user_id;
+exports.getAll = function( req, res, next) {
 
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
   var perPage = 30;
   var options = {
-    user : user_id,
     perPage: perPage,
     page: page
   };
@@ -53,6 +50,42 @@ exports.listTrickByUser = function( req, res, next) {
     .skip(options.perPage * options.page)
     .limit(options.perPage)
     .exec(function(err, tricks) {
+
+      if(err) {
+        errorHelper.mongoose(res, err);
+      };
+
+      var resultPrint     = {}
+      resultPrint.status  = 200
+      resultPrint.message = 'success'
+      resultPrint.data    = tricks
+      return res.json(200, resultPrint)
+    })
+}
+
+exports.listTrickByUser = function( req, res, next) {
+
+  var user_id = req.query.user_id;
+
+  var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
+  var perPage = 30;
+  var options = {
+    perPage: perPage,
+    page: page
+  };
+
+  var condition = options || {};
+
+  Trick.find({user : user_id})
+    .sort({createdAt: -1})
+    .skip(options.perPage * options.page)
+    .limit(options.perPage)
+    .exec(function(err, tricks) {
+
+      if(err) {
+        errorHelper.mongoose(res, err);
+      };
+
       var resultPrint     = {}
       resultPrint.status  = 200
       resultPrint.message = 'success'

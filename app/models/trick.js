@@ -1,8 +1,5 @@
-// var phantom = require('phantom-render-stream');
-// var screenshot = phantom();
-//
-var screenshot = require('url-to-screenshot');
-
+var phantom = require('phantom-render-stream');
+var screenshot = phantom();
 var fs = require('fs');
 var config = require('../config/config');
 var crypto = require('crypto');
@@ -84,51 +81,24 @@ Trick.methods = {
         , height: 960
       }
 
-      // request(url, function (error, response, body) {
+      var makeSalt = Math.round((new Date().valueOf() * Math.random())) + '';
 
-        // if (!error && response.statusCode == 200) {
+      var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
 
-          var makeSalt = Math.round((new Date().valueOf() * Math.random())) + '';
+      var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
 
-          var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
+      var outputStream = fs.createWriteStream(location_screenshoot);
 
-          var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
+      screenshot(url).pipe(outputStream);
 
-          // var outputStream = fs.createWriteStream(location_screenshoot);
+      self.screenshot = hasFileName + '.' + opts.format;
 
-          screenshot(url)
-            .width(1280)
-            .height(800)
-            .capture(function(err, img) {
-              if (err) {
-                console.log(err)
-              }
+      // outputStream.on('finish', function () {
 
-              fs.writeFile(location_screenshoot, img);
+      //   console.log('file has been written');
 
-
-              self.screenshot = hasFileName + '.' + opts.format;
-              self.save(cb);
-            });
-
-
-          // screenshot(url, opts )
-          //   .pipe(outputStream)
-          //   .pipe(process.stdout);
-
-          // // outputStream.on('finish', function (data) {
-
-          //   // console.log('data');
-
-          //   self.screenshot = hasFileName + '.' + opts.format;
-
-          //   self.save(cb)
-
-          // // });
-
-        // }
-
-      // })
+        self.save(cb);
+      // });
 
     })
   },
@@ -168,9 +138,6 @@ Trick.statics = {
       .skip(options.perPage * options.page)
       .exec(cb)
   }
-
 }
 
 module.exports = mongoose.model('Trick', Trick)
-
-

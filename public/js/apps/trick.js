@@ -1,16 +1,80 @@
 "use strict";
 
 $(function() {
+
   Trick.init();
 })
 
-var Trick = {
+var Trick = App.Trick = {
   init: function() {
-    Trick.createNewTrick();
-    Trick.importBookmark();
+    var This = Trick;
+    This.mustacheTemplateDir = App.Mustache.directory + "/tricks.mustache";
+    This.createNewTrick();
+    This.importBookmark();
+    This.tricksByUser();
   },
   tricksByUser: function() {
+    var blockUserTrick = $('.block-tricks-user');
 
+    if(blockUserTrick.length > 0) {
+      $.Mustache
+        .load(Trick.mustacheTemplateDir)
+        .fail(function () {
+          console.log('Failed to load templates from <code>' + Trick.mustacheTemplateDir + '</code>');
+        })
+        .done(function () {
+          Trick.getTrickByUser(blockUserTrick);
+        });
+    }
+  },
+  getTrickByUser: function(el) {
+    var user_id = el.data('id');
+    var username = el.data('username');
+
+    console.log('tricks-by-'+ username);
+
+    var list_tricks = $.jStorage.get('tricks-by-'+ username);
+
+    if( _.isNull(list_tricks) ) {
+      $.ajax({
+        url: App.API_BaseUrl + '/trick/tricks-user',
+        method: 'GET',
+        cache: false,
+        data: {
+          user_id: user_id
+        },
+        dataType: "JSON",
+        beforeSend: function( xhr ) {
+        }
+      })
+      .done(function(res) {
+        var list_tricks = res.data;
+
+        Trick.renderTrick(el, list_tricks);
+
+        if(_.size(list_tricks) > 0) {
+          $.jStorage.set('tricks-by-'+ username, list_tricks, {TTL : 600000}); // set localStorange to 10 Minutes
+        }
+
+      })
+      .fail (function(jqXHR, textStatus) {
+        Notifier.show('there is something wrong to load catalogue, please try again', 'err');
+      })
+
+    } else {
+      console.log('from jStorage');
+      Trick.renderTrick(el, list_tricks);
+    }
+  },
+  renderTrick: function(el, list_tricks) {
+
+    var render = render || el;
+
+    render.html('');
+
+    _.each(list_tricks, function(tricks) {
+       render.append($.Mustache.render('trickItem', tricks ));
+    });
   },
   createNewTrick: function() {
 

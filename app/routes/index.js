@@ -24,6 +24,7 @@ Route.get('/', function(req, res) {
 Route
   .all('/api/*', Auth.APIrequiresUserLogin)
   .post('/api/trick/create', API.tricks.create)
+  .get('/api/trick', API.tricks.getAll)
   .get('/api/trick/tricks-user', API.tricks.listTrickByUser)
   .post('/api/trick/import', API.Uploader.import)
   .get('/api/screenshoot', API.tricks.screenShootUrl)

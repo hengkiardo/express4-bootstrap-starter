@@ -54,6 +54,7 @@ module.exports = (grunt) ->
 
       apps:
         src: [
+          "public/js/apps/global.js"
           "public/js/apps/home.js"
           "public/js/apps/trick.js"
         ]

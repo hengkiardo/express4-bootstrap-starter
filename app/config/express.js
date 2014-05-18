@@ -1,22 +1,21 @@
-var logger         = require('morgan')
-  , path           = require('path')
-  , responseTime   = require('response-time')
-  , methodOverride = require('method-override')
-  , multer         = require('multer')
-  , compression    = require('compression')
-  , favicon        = require('static-favicon')
-  , bodyParser     = require('body-parser')
-  , cookieParser   = require('cookie-parser')
-  , session        = require('express-session')
-  , MongoStore     = require('connect-mongo')({ session: session })
-  , errorHandler   = require('errorhandler')
-  , env            = process.env.NODE_ENV || 'development'
-  , views_helpers  = require('../helper/views-helper')
-  , pkg            = require('../../package.json')
-  // , flash          = require('connect-flash')
-  , flash          = require('express-flash')
-  , routes         = require('../routes')
-  , _              = require('lodash')
+var logger         = require('morgan');
+var path           = require('path');
+var responseTime   = require('response-time');
+var methodOverride = require('method-override');
+var multer         = require('multer');
+var compression    = require('compression');
+var favicon        = require('static-favicon');
+var bodyParser     = require('body-parser');
+var cookieParser   = require('cookie-parser');
+var session        = require('express-session');
+var MongoStore     = require('connect-mongo')({ session: session });
+var errorHandler   = require('errorhandler');
+var env            = process.env.NODE_ENV || 'development';
+var views_helpers  = require('../helper/views-helper');
+var pkg            = require('../../package.json');
+var flash          = require('express-flash');
+var routes         = require('../routes');
+var _              = require('lodash');
 
 module.exports = function (app, express, passport) {
 
@@ -25,28 +24,26 @@ module.exports = function (app, express, passport) {
     res.header('Access-Control-Allow-Credentials', true)
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
-  }
+  };
 
   // settings
-  app
-    .set('env', env)
-    .set('port', app.config.server.port || 3000)
-    .set('views', path.join(__dirname, '../../app/views'))
-    .set('view engine', 'jade')
+  app.set('env', env);
+  app.set('port', app.config.server.port || 3000);
+  app.set('views', path.join(__dirname, '../../app/views'));
+  app.set('view engine', 'jade');
 
-  app
-    .enable('trust proxy')
+  app.enable('trust proxy');
 
-  app
-    .disable('x-powered-by')
+  app.disable('x-powered-by');
 
   // Express use middlewares
-  app
-    .use(favicon(path.join(app.config.root, 'public/favicon.png')))
-    .use(bodyParser())
-    .use(multer())
-    .use(methodOverride())
-    .use(allowCrossDomain)
+  app.use(favicon(path.join(app.config.root, 'public/favicon.png')));
+  app.use(multer());
+  app.use(allowCrossDomain);
+  app.use(logger('dev'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded());
+  app.use(methodOverride());
 
   app.use(cookieParser('notagoodsecretnoreallydontusethisone'))
   app.use(session({
@@ -68,44 +65,30 @@ module.exports = function (app, express, passport) {
   app.use(function (req, res, next) {
     res.locals.pkg      = pkg
     res.locals.NODE_ENV = env
-
     if(_.isObject(req.user)) {
       res.locals.User = req.user
     }
-
     next()
   });
 
   app.use(views_helpers(pkg.name));
   app.use(flash());
 
-    /** ROUTES Apps */
+  /** ROUTES Apps */
   app.use(routes)
 
-  // development error handler
   // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(logger('dev'));
     app.use(errorHandler());
     app.use(responseTime());
-    app.use(function(err, req, res, next) {
-      res.status(err.status || 500);
-      res.render('500', {
-          message: err.message,
-          error: err
-      });
-    });
   } else {
-    app.use(logger());
     app.use(compression({
-      filter: function (req, res) {
-        return /json|text|javascript|css/.test(res.getHeader('Content-Type'))
-      },
+      filter: function (req, res) { return /json|text|javascript|css/.test(res.getHeader('Content-Type')) },
       level: 9
     }))
   }
-  // error handlers
 
+  // error handlers
   // catch 404 and forwarding to error handler
   app.use(function(req, res, next) {
       var err = new Error('Not Found');

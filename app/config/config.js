@@ -13,7 +13,7 @@ var config = {
       hostname: 'localhost',
     },
     database: {
-      url: 'mongodb://localhost/express4_bootstrap_starter' || 'mongodb://root:root123passowr@galaga.1.mongolayer.com:10066,galaga.0.mongolayer.com:10066/express4-bootstrap-starter'
+      url: 'mongodb://localhost/express4_bootstrap_starter'
     },
     BaseApiURL : 'http://localhost:3001/api/',
     root     : rootPath,
@@ -44,7 +44,7 @@ var config = {
       hostname: process.env.HOSTNAME || '127.0.0.1',
     },
     database: {
-      url: process.env.MONGODB_CONNECTION_URI || process.env.MONGOHQ_URL || 'mongodb://root:root123passowr@galaga.1.mongolayer.com:10066,galaga.0.mongolayer.com:10066/express4-bootstrap-starter'
+      url: 'mongodb://162.243.26.18:27017/express4_bootstrap_starter' || 'mongodb://root:root123passowr@galaga.1.mongolayer.com:10066,galaga.0.mongolayer.com:10066/express4-bootstrap-starter'
     },
     BaseApiURL : 'http://localhost:3001/api/',
     root     : rootPath,

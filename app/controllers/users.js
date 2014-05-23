@@ -1,11 +1,10 @@
+"use strict";
 
-/**
- * Module dependencies.
- */
-// var User     = require('../models/user');
 var mongoose = require('mongoose');
-var User     = mongoose.model('User');
-var async    = require('async');
+var User = mongoose.model('User');
+var async = require('async');
+var config = require('../config/config');
+var errorHelper = require(config.root + '/app/helper/errors');
 
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'
@@ -78,7 +77,7 @@ exports.create = function (req, res, next) {
   user.save(function (err, new_user) {
     if (err) {
       return res.render('users/signup', {
-        errors: utils.errors(err.errors),
+        errors: errorHelper.proper(err.errors),
         user: user,
         title: 'Sign up'
       })

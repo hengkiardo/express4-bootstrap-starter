@@ -31,21 +31,21 @@ exports.import = function (req, res, next) {
 
         var add_date = moment.unix(_.parseInt($(this).attr('add_date')));
         newTrick.createdAt = new Date(add_date).toISOString();
+        newTrick.user = req.user._id;
+
         var trick = new Trick(newTrick);
 
         if(Validator.isURL(newTrick.origin_url) && !Validator.isNull(newTrick.title )) {
-          trick.save(function(err) {
-            if (err) {
-              console.log(err)
-            }
-          });
-        }
 
-        var errPrint = {}
-        errPrint.status = 200;
-        errPrint.message = 'success';
-        return res.send(200, errPrint);
+          trick.screenShoot(newTrick.origin_url);
+        }
     });
+
+    var errPrint = {}
+    errPrint.status = 200;
+    errPrint.message = 'success';
+    return res.send(200, errPrint);
+
   } else {
     var errPrint = {}
     errPrint.status = 415;

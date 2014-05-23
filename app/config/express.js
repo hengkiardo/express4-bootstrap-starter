@@ -63,8 +63,9 @@ module.exports = function (app, express, passport) {
 
   app.use(express.static(path.join(app.config.root, 'public')))
   app.use(function (req, res, next) {
-    res.locals.pkg      = pkg
-    res.locals.NODE_ENV = env
+    res.locals.pkg      = pkg;
+    res.locals.NODE_ENV = env;
+    res.locals.moment   = require('moment');
     if(_.isObject(req.user)) {
       res.locals.User = req.user
     }

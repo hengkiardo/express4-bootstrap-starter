@@ -17,32 +17,14 @@ exports.create = function(req, res) {
 }
 
 exports.myTrick = function (req, res) {
+  var current_username = req.user.username;
+  var username_params = req.params.username;
 
-  var options = {
-    url     : config.BaseApiURL + 'trick/tricks-user?user_id='+req.user._id,
-    headers : {
-        'User-Agent': 'web-frontend'
-      , 'is_login' : true
-    }
-  };
-
-  request(options, callback);
-
-  function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      var Data = JSON.parse(body);
-
-      var tricks_user = {
-          tricks : Data.data
-        , count : _.size(Data.data)
-      }
-      res.render('tricks/tricks-user', {
-        title: 'My Trick',
-        tricks_user : tricks_user
-      })
-    } else {
-      res.redirect('/');
-    }
+  if( current_username !== username_params) {
+      res.redirect('/'+username_params)
   }
+
+  res.render('tricks/tricks-user', {
+    title: 'My Trick'
+  })
 }

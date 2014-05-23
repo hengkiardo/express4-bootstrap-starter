@@ -49,7 +49,7 @@ var config = {
     BaseApiURL : 'http://localhost:3001/api/',
     root     : rootPath,
     app      : {
-      name : 'BlastBoom - Email and SMS Blasting'
+      name : 'Express4-Bootstrap-Starter'
     },
     twitterAuth: true,
     twitter: {

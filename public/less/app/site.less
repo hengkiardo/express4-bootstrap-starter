@@ -18,6 +18,11 @@ body {
   height: 100%;
   margin: 0 auto -100px;
   padding: 0 0 140px;
+
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 #flash-message {
@@ -138,13 +143,28 @@ form {
 }
 
 .trick-item {
+  width: 282px;
+  float: left;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
   .thumb-btn {
     height: 250px;
     display: block;
     overflow-y: hidden;
   }
+  .b-t.pad-10,
   .panel-body {
-    background: darken(@navbar-default-bg, 2%);
+    background: #fff;
   }
 }
 .avatar{

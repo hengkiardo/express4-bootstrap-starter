@@ -1,12 +1,21 @@
 <script id="trickItem" type="text/template">
-<div class="col-lg-3 pad-none m-r-sm b trick-item">
+<div class="pad-none m-r-sm b m-b trick-item">
   <figure class="thumb-btn">
     <img src="/screenshot/{{screenshot}}">
   </figure>
   <div class="panel-body b-t">
-    <h4 class="pad-none m-n">
+    <h4 class="pad-none m-n text-md">
       <a href="{{origin_url}}" target="_blank">{{title}}</a>
       </h4>
   </div>
+
+  {{#user}}
+  <div class="b-t pad-10">
+    <a href="/{{username}}" target="_blank" title="{{username}}">
+      <img src="{{photo_profile}}" width="40" height="40">
+    </a>
+    <a href="/{{username}}" target="_blank" title="{{username}}"><span class="text-xs">{{username}}</span></a>
+  </div>
+  {{/user}}
 </div>
 </script>

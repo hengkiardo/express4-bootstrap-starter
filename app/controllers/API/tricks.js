@@ -38,7 +38,7 @@ exports.create = function (req, res, next) {
 exports.getAll = function( req, res, next) {
 
   var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-  var perPage = 30;
+  var perPage = 28;
   var options = {
     perPage: perPage,
     page: page
@@ -50,6 +50,7 @@ exports.getAll = function( req, res, next) {
     .sort({createdAt: -1})
     .skip(options.perPage * options.page)
     .limit(options.perPage)
+    .populate('user', 'username photo_profile')
     .exec(function(err, tricks) {
 
       if(err) {

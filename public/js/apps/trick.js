@@ -72,8 +72,16 @@ var Trick = App.Trick = {
 
     render.html('');
 
-    _.each(list_tricks, function(tricks) {
-       render.append($.Mustache.render('trickItem', tricks ));
+    _.each(list_tricks, function(trick) {
+
+      if(trick.user.photo_profile === undefined) {
+        trick.user.photo_profile = 'https://gravatar.com/avatar/' + md5(trick.user.email) + '?s=200&d=retro'
+      }
+      delete trick.user.email;
+
+      console.log(trick);
+
+      render.append($.Mustache.render('trickItem', trick ));
     });
 
     var container = document.querySelector('#home-page');

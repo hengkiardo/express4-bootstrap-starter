@@ -10,6 +10,7 @@ var _ = require('lodash');
 
 /**
  * Create an Tricks
+ * POST : '/api/trick/create'
  */
 exports.create = function (req, res, next) {
   var trick = new Trick(req.body)

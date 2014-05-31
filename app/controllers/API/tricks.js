@@ -82,6 +82,7 @@ exports.listTrickByUser = function( req, res, next) {
     .sort({createdAt: -1})
     .skip(options.perPage * options.page)
     .limit(options.perPage)
+    .populate('user', 'username photo_profile email')
     .exec(function(err, tricks) {
 
       if(err) {

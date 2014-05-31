@@ -31,8 +31,6 @@ var Trick = App.Trick = {
     var user_id = el.data('id');
     var username = el.data('username');
 
-    console.log('tricks-by-'+ username);
-
     var list_tricks = $.jStorage.get('tricks-by-'+ username);
 
     if( _.isNull(list_tricks) ) {
@@ -77,14 +75,17 @@ var Trick = App.Trick = {
       if(trick.user.photo_profile === undefined) {
         trick.user.photo_profile = 'https://gravatar.com/avatar/' + md5(trick.user.email) + '?s=200&d=retro'
       }
-      delete trick.user.email;
 
-      console.log(trick);
+      if(!_.isArray(trick.tags)) {
+        trick.tags = trick.tags.split(/\s*,\s*/);
+      }
+      console.log(trick.user);
+      delete trick.user.email;
 
       render.append($.Mustache.render('trickItem', trick ));
     });
 
-    var container = document.querySelector('#home-page');
+    var container = document.querySelector('.block-tricks-user');
     var msnry;
     // initialize Masonry after all images have loaded
     imagesLoaded( container, function() {
@@ -97,7 +98,6 @@ var Trick = App.Trick = {
     var formNewTrick = $('form.new-trick');
 
     formNewTrick.submit(function(e) {
-
       e.preventDefault();
 
     }).validate({
@@ -113,16 +113,23 @@ var Trick = App.Trick = {
         }
       },
       submitHandler : function(form){
+        var data = {
+            title : formNewTrick.find("input#title").val(),
+            origin_url : formNewTrick.find("input#origin_url").val(),
+            description : formNewTrick.find("input#desc").val(),
+            tags : $("input#tags").tagsinput('items')
+          };
+
         $.ajax({
           url      : App.API_BaseUrl + '/trick/create',
           type     : 'POST',
           dataType : "json",
-          data     : $(form).serialize()
+          data     : data
         })
         .fail(function(res) {
           Notifier.show(res.responseJSON.message, 'err');
         })
-        .always(function(res) {
+        .done(function(res) {
           Notifier.show("Your Tricks success created");
 
           formNewTrick.find('input[type=text]').val('');

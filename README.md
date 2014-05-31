@@ -30,6 +30,7 @@ After installing  Node.js and MongoDB server has running, then its time to runni
 
 ```
   $ git clone git@github.com:aredo/express4-bootstrap-starter.git
+  $ cd express4-bootstrap-starter
   $ npm install
   $ cp app/config/config.example.js app/config/config.js
   $ grunt

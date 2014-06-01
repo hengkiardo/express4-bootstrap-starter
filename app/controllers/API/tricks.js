@@ -89,11 +89,17 @@ exports.listTrickByUser = function( req, res, next) {
         errorHelper.mongoose(res, err);
       };
 
-      var resultPrint     = {}
-      resultPrint.status  = 200
-      resultPrint.message = 'success'
-      resultPrint.data    = tricks
-      return res.json(200, resultPrint)
+      Trick.count({user : user_id}, function (err, count) {
+
+        var resultPrint          = {}
+        resultPrint.status       = 200
+        resultPrint.message      = 'success'
+        resultPrint.tricks       = tricks
+        resultPrint.tricks_count = count
+        return res.json(200, resultPrint)
+
+      });
+
     })
 }
 

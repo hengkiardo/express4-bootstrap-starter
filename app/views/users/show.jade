@@ -8,9 +8,12 @@ block main
       .media-body
         h4.media-heading @#{user.username}
         p
-          span.label.label-primary 10 Tricks
+          span.label.label-primary
+            span.tricks-count 0
+            | &nbsp; Tricks
+
           | &nbsp;
-          span.label.label-success 89 Stars
+          span.label.label-success 0 Stars
         p
           a.btn.btn-xs.btn-default(href='#')
             span.fa.fa-envelope-o &nbsp; Message

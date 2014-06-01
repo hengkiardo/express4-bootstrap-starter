@@ -31,9 +31,10 @@ var Trick = App.Trick = {
     var user_id = el.data('id');
     var username = el.data('username');
 
-    var list_tricks = $.jStorage.get('tricks-by-'+ username);
+    var from_jStorage = $.jStorage.get('tricks-by-'+ username);
+    console.log(from_jStorage);
 
-    if( _.isNull(list_tricks) ) {
+    if( _.isNull(from_jStorage) ) {
       $.ajax({
         url: App.API_BaseUrl + '/trick/tricks-user',
         method: 'GET',
@@ -46,14 +47,19 @@ var Trick = App.Trick = {
         }
       })
       .done(function(res) {
-        var list_tricks = res.data;
+        var list_tricks = res.tricks;
+        var tricks_count = res.tricks_count;
 
         Trick.renderTrick(el, list_tricks);
 
-        if(_.size(list_tricks) > 0) {
-          $.jStorage.set('tricks-by-'+ username, list_tricks, {TTL : 600000}); // set localStorange to 10 Minutes
-        }
 
+        if($('.profile-card').length > 0) {
+          $('.profile-card').find('.tricks-count').html(tricks_count);
+        };
+
+        if(_.size(list_tricks) > 0) {
+          $.jStorage.set('tricks-by-'+ username, res, {TTL : 600000}); // set localStorange to 10 Minutes
+        }
       })
       .fail (function(jqXHR, textStatus) {
         Notifier.show('there is something wrong to load catalogue, please try again', 'err');
@@ -61,6 +67,14 @@ var Trick = App.Trick = {
 
     } else {
       console.log('from jStorage');
+      var list_tricks = from_jStorage.tricks;
+
+      var tricks_count = from_jStorage.tricks_count;
+
+      if($('.profile-card').length > 0) {
+        $('.profile-card').find('.tricks-count').html(tricks_count);
+      };
+
       Trick.renderTrick(el, list_tricks);
     }
   },

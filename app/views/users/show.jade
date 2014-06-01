@@ -1,5 +1,22 @@
 extends ../layouts/default
 
 block main
- h1 #{user.username}
- h3 #{user.email}
+  .profile-card.panel-body.b.bg-white
+    .media
+      a.pull-left(href='#')
+          img.media-object.img-circle(src='#{user.photo_profile}', width='100', height='100')
+      .media-body
+        h4.media-heading @#{user.username}
+        p
+          span.label.label-primary 10 Tricks
+          &nbsp;
+          span.label.label-success 89 Stars
+        p
+          a.btn.btn-xs.btn-default(href='#')
+            span.fa.fa-envelope-o &nbsp; Message
+          | &nbsp;
+          a.btn.btn-xs.btn-default(href='#')
+            span.fa.fa-star &nbsp; Favorite
+
+  section.m-t-md.block-tricks-user.block-tricks(data-id="#{user._id}", data-username="#{user.username}")
+    .clearfix

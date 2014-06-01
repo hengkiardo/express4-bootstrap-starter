@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var async = require('async');
 var config = require('../config/config');
+var utility = require('utility');
 var errorHelper = require(config.root + '/app/helper/errors');
 
 var login = function (req, res) {
@@ -140,6 +141,10 @@ exports.user_profile = function (req, res, next) {
           title: 'User with username `' + username + '` not found',
         })
       } else {
+        if(user.photo_profile === undefined) {
+          user.photo_profile = 'https://gravatar.com/avatar/' + utility.md5(user.email) + '?s=200&d=retro'
+        }
+
         res.render('users/show', {
           title: user.name,
           user: user

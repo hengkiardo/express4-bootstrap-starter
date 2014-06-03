@@ -80,7 +80,6 @@ module.exports = function (app, express, passport) {
 
   // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(errorHandler());
     app.use(responseTime());
   } else {
     app.use(compression({
@@ -89,23 +88,25 @@ module.exports = function (app, express, passport) {
     }))
   }
 
+  app.use(errorHandler());
+
   // error handlers
   // catch 404 and forwarding to error handler
-  app.use(function(req, res, next) {
-      var err = new Error('Not Found');
-      res.status(404).render('404', {
-        url: req.protocol + '://' + req.headers.host + req.originalUrl,
-        error: 'Page not found !!!'
-      })
-  });
+  // app.use(function(req, res, next) {
+  //   var err = new Error('Not Found');
+  //   res.status(404).render('404', {
+  //     url: req.protocol + '://' + req.headers.host + req.originalUrl,
+  //     error: 'Page not found !!!'
+  //   })
+  // });
 
   // production error handler
   // no stacktraces leaked to user
-  app.use(function(err, req, res, next) {
-      res.status(err.status || 500);
-      res.render('500', {
-          message: err.message,
-          error: {}
-      });
-  });
+  // app.use(function(err, req, res, next) {
+  //   res.status(err.status || 500);
+  //   res.render('500', {
+  //       message: err.message,
+  //       error: {}
+  //   });
+  // });
 }

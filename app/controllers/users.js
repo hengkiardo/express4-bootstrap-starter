@@ -5,7 +5,9 @@ var User = mongoose.model('User');
 var async = require('async');
 var config = require('../config/config');
 var utility = require('utility');
+var crypto = require('crypto');
 var errorHelper = require(config.root + '/app/helper/errors');
+var Mailer   = require(config.root + '/app/helper/mailer');
 
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'
@@ -152,5 +154,54 @@ exports.user_profile = function (req, res, next) {
       }
 
     })
+}
 
+exports.getForgotPassword = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+
+  res.render('users/forgot-password', {
+    title: 'Forgot Password'
+  });
+}
+
+
+exports.postForgotPassword = function (req, res) {
+
+  async.waterfall([
+    function(next) {
+      crypto.randomBytes(16, function(err, buf) {
+        var token = buf.toString('hex');
+        next(err, token);
+      });
+    },
+    function(token, next) {
+      User.findOne({ email: req.body.email.toLowerCase() }, function(err, user) {
+
+        if (!user) {
+          return errorHelper.custom(res, { msg : 'No account with that email address exists.', code: 404 });
+        }
+
+        user.reset_password_token = token;
+        user.reset_password_expires = Date.now() + 43200000; // 12 hour
+
+        user.save(function(err) {
+          next(err, token, user);
+        });
+      });
+    }, function(token, user, next) {
+        user.url_reset_password = req.protocol + '://' + req.headers.host + '/reset-password/' + token
+
+        Mailer.sendOne('forgot-password', "Trick.JS - Password Reset", user, function (err, responseStatus, html, text){
+          next(err, responseStatus);
+        })
+      }
+    ], function(err) {
+      if (err) {
+        err.status = 500;
+        errorHelper.custom(res, err);
+      }
+      return res.json({message: 'success', status: 200});
+    });
 }

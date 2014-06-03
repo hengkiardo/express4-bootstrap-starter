@@ -12,6 +12,13 @@ body {
   padding: 0 15px;
 }
 
+a {
+  &:hover {
+    text-decoration: none;
+    color: @gray;
+  }
+}
+
 #page {
   min-height: 100%;
   height: auto !important;
@@ -91,6 +98,11 @@ footer {
     width: 315px;
     margin: 0 auto;
   }
+
+  .forgot-password {
+    display: block;
+    text-align: center;
+  }
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -99,7 +111,8 @@ footer {
 .form-signin .checkbox {
   font-weight: normal;
 }
-.form-signin .form-control {
+.form-signin .form-control,
+.form-forgot-password .form-control {
   position: relative;
   border: none;
   box-shadow: none !important;
@@ -129,6 +142,7 @@ footer {
 .form-signin button[type="submit"] {
   width: 70%;
   margin: 0 auto 20px;
+  outline: 0;
 }
 
 form {
@@ -140,6 +154,12 @@ form {
       color: @error-color;
     }
   }
+}
+
+.form-forgot-password {
+  max-width: 400px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 .trick-item {
@@ -221,3 +241,5 @@ Bootbox (Confirm Dialog)
   clear: both;
   width: 300px;
 }
+
+

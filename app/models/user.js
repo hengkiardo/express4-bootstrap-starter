@@ -39,7 +39,9 @@ var UserSchema = new Schema({
   },
   salt: {
     type: String
-  }
+  },
+  reset_password_token: String,
+  reset_password_expires: Date
 })
 
 UserSchema.plugin(CreateUpdatedAt)

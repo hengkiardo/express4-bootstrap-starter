@@ -45,6 +45,6 @@ exports.custom = function (res, err) {
   var status = err.code || err.status;
 
   error_results.status  = status
-  error_results.message = err.msg
+  error_results.message = err.msg || err.message
   return res.json(status, error_results)
 }

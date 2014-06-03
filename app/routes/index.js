@@ -35,6 +35,8 @@ Route
   .get('/login', userController.login)
   .get('/signup', userController.signup)
   .get('/logout', userController.logout)
+  .get('/forgot-password', userController.getForgotPassword)
+  .post('/forgot-password', userController.postForgotPassword)
   .post('/users/create', userController.create)
   .get('/dashboard', Auth.requiresLogin, userController.show)
   .post('/users/session',

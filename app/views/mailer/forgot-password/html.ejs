@@ -1,0 +1,16 @@
+<%- include ../include/header %>
+
+  <h3> Hello <%= username %>!</h3>
+
+  <p> You are receiving this because you forgot your password for Trick.js <br />If you did not, chances are someone else tried to log in as you. No need to panic. Simply ignore this email and nothing will happen.</p>
+
+  <p style="text-align:center;margin-bottom:0.5rem; width:300px">
+    <a href="<%= url_reset_password %>" style="display:block;padding:16px;background:#e06666;font-weight:bold;font-size:16px;color:white" target="_blank">Click here to reset your password</a>
+  </p>
+  <p>or paste this into your browser to complete the process</p>
+
+  <p><%= url_reset_password %></p>
+
+  <p>After you reset your password you will be able to login again.</p>
+
+<%- include ../include/footer %>

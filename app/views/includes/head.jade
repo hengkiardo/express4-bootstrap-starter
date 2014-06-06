@@ -19,6 +19,8 @@ head(prefix="og: http://ogp.me/ns# express4-bootstrap-starter: http://ogp.me/ns/
   meta(property="og:image", content="")
   meta(property="og:site_name", content="#{pkg.name}")
 
+  script(src='/js/libs/modernizr.custom.js')
+
   if NODE_ENV == 'development'
     link( rel="stylesheet" href="/css/bootstrap.css" type="text/css")
     link( rel="stylesheet" href="/css/apps.css" type="text/css")

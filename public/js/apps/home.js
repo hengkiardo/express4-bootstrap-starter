@@ -4,6 +4,8 @@ $(function() {
 
   Home.init();
 
+  NProgress.set(0.3);
+
 });
 
 

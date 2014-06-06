@@ -1,7 +1,9 @@
 "use strict";
 
 // Global defenition
+NProgress.configure({ ease: 'ease', speed: 500, trickle: false });
 
+NProgress.start();
 if (typeof App != "object") {
     window.App = {}
 }
@@ -36,3 +38,9 @@ if(window.isLogin) {
     });
   }
 };
+
+
+$(window).load(function() {
+ // executes when complete page is fully loaded, including all frames, objects and images
+ NProgress.done();
+});

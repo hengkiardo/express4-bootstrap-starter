@@ -30,9 +30,11 @@ var User = App.User = {
           },
           beforeSend: function(xhr, opts){
             btnSubmit.attr('disabled', 'disabled');
+            NProgress.start();
           }
         })
         .fail(function(res) {
+          NProgress.done();
           btnSubmit.attr('disabled', false);
           Notifier.show(res.responseJSON.message, 'err');
         })
@@ -49,5 +51,4 @@ var User = App.User = {
 $(function() {
 
   User.init();
-
 });

@@ -1,6 +1,6 @@
-var User = App.User = {
+App.User = _.extend( App.User, {
   init: function () {
-    User.forgotPassword();
+    this.forgotPassword();
   },
   forgotPassword: function () {
     var formForgot = $('form.form-forgot-password');
@@ -46,9 +46,9 @@ var User = App.User = {
       }
     });
   }
-}
+});
 
 $(function() {
 
-  User.init();
+  App.User.init();
 });

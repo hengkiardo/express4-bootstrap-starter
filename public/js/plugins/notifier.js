@@ -9,12 +9,12 @@ var Notifier = (function() {
         that = {};
 
     that.init = function(options) {
-      var DOM = '<div id="alertNotifier" class="notifier alert alert-success"><span></span></div>';
-      $('body').append(DOM);
       elem = $(options.selector);
     };
 
     that.show = function(text, err) {
+      var DOM = '<div id="alertNotifier" class="notifier alert alert-success"><span></span></div>';
+      $('body').append(DOM);
       clearTimeout(hideHandler);
       if(err != undefined) {
         console.log(err);

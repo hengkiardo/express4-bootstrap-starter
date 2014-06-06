@@ -158,9 +158,8 @@ var Trick = App.Trick = {
   }, // end of createNewTrick
   importBookmark: function() {
     if($('#fileupload').length > 0) {
-
-    var prgressBar = Trick.progressBarDOM();
-    $('footer').after(prgressBar);
+      var prgressBar = Trick.progressBarDOM();
+      $('footer').after(prgressBar);
       $('#fileupload').fileupload({
         url: App.API_BaseUrl + '/trick/import',
         dataType: 'json',
@@ -179,6 +178,7 @@ var Trick = App.Trick = {
 
         },
         progressall: function (e, data) {
+            $('#progress').fadeIn();
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progress .progress-bar').css( 'width', progress + '%');
         }

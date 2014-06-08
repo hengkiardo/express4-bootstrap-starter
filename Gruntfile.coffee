@@ -54,6 +54,7 @@ module.exports = (grunt) ->
 
       apps:
         src: [
+          "public/js/plugins/nprogress.js"
           "public/js/apps/global.js"
           "public/js/apps/user.js"
           "public/js/apps/home.js"
@@ -63,7 +64,7 @@ module.exports = (grunt) ->
 
       plugins:
         src: [
-          "public/js/plugins/**.js"
+          "public/js/plugins/*"
         ]
         dest: "public/js/plugins.js"
 
@@ -82,8 +83,6 @@ module.exports = (grunt) ->
         compress:
           dead_code: true
           drop_console: true
-      # wrap: true,
-      # sourceMap: true
       main_script:
         src: [
           "<%= concat.bootstrap.dest %>"

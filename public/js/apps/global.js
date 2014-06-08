@@ -1,7 +1,6 @@
 "use strict";
 
 // Global defenition
-
 if (typeof App != "object") {
     window.App = {}
 }
@@ -15,9 +14,13 @@ App.Mustache.directory = App.BaseUrl + '/mustache';
 
 if(window.isLogin) {
 
-  if($.jStorage.get('current_user') !== null ) {
+  var currentUser = $.jStorage.get('current_user');
 
-    App.User.session = $.jStorage.get('current_user');
+  if( _.isObject(currentUser) ) {
+
+    App.User.session = currentUser;
+
+    console.log(App.User.session);
 
   } else {
     $.ajax({
@@ -36,3 +39,11 @@ if(window.isLogin) {
     });
   }
 };
+
+NProgress.configure({ ease: 'ease', speed: 500, trickle: false });
+NProgress.start();
+
+$(window).load(function() {
+  // executes when complete page is fully loaded, including all frames, objects and images
+  NProgress.done();
+});

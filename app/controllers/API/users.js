@@ -15,6 +15,7 @@ exports.get_profile = function (req, res, next) {
         errPrint.data    = err.errors
         return res.json(200, errPrint)
       } else {
+        delete user.hashed_password
         var resultPrint     = {}
         resultPrint.status  = 200
         resultPrint.message = "success"

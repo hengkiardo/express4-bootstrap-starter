@@ -29,7 +29,6 @@ if(window.isLogin) {
       , cache: true
       , async: false
       , success: function (res) {
-        delete res.data.hashed_password
         var data = res.data;
 
         App.User.session = res.data;

@@ -28,7 +28,7 @@ exports.proper = function (errors) {
 
 
 exports.mongoose = function (res, err) {
-  var status = 400;
+  var status = 500;
 
   if ( err.code == 11000 ) {
     status = status || 409

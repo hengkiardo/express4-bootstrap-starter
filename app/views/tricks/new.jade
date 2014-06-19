@@ -4,7 +4,7 @@ block main
   .row
     .col-md-8
       form.form-horizontal.new-trick(method="post", action='/trick/create', role="form")
-
+        input#_csrf(type='hidden', name='_csrf', value=_csrf)
         .form-group
           label.col-sm-2.control-label(for='title') Trick Title
           .col-sm-10

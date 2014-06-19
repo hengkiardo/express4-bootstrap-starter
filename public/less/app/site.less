@@ -89,7 +89,8 @@ footer {
   }
 }
 
-.form-signin {
+.form-signin,
+.form-reset-password {
   max-width: 375px;
   padding: 15px;
   margin: 0 auto;
@@ -103,46 +104,53 @@ footer {
     display: block;
     text-align: center;
   }
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control,
-.form-forgot-password .form-control {
-  position: relative;
-  border: none;
-  box-shadow: none !important;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-  outline: none;
-  box-shadow: none !important;
-  border: none;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 
-.form-signin button[type="submit"] {
-  width: 70%;
-  margin: 0 auto 20px;
-  outline: 0;
+  .form-signin-heading,
+  .checkbox {
+    margin-bottom: 10px;
+  }
+  .checkbox {
+    font-weight: normal;
+  }
+
+  .form-control,
+  .form-control {
+    position: relative;
+    border: none;
+    box-shadow: none !important;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .form-control:focus {
+    z-index: 2;
+    outline: none;
+    box-shadow: none !important;
+    border: none;
+  }
+  input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  button[type="submit"] {
+    width: 70%;
+    margin: 0 auto 20px;
+    outline: 0;
+
+    &.btn-reset-password {
+      width: 100%;
+    }
+  }
 }
 
 form {
@@ -160,6 +168,10 @@ form {
   max-width: 400px;
   padding: 15px;
   margin: 0 auto;
+
+  .form-control {
+    box-shadow: none !important;
+  }
 }
 
 .trick-item {

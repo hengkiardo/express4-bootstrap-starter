@@ -6,7 +6,7 @@ block form
     include ../includes/messages
 
     form.form-signin(action="/users/create", method="post", role="form")
-      input(type='hidden', name='_csrf', value="#{csrf_token}")
+      input(type='hidden', name='_csrf', value=_csrf)
       p.col-sm-offset-2.error= message
       .list-group
         .list-group-item

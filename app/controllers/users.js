@@ -139,9 +139,11 @@ exports.user_profile = function (req, res, next) {
         return next(err)
       }
       if(!user) {
-        res.render('users/not-found', {
-          title: 'User with username `' + username + '` not found',
-        })
+        // res.render('users/not-found', {
+        //   title: 'User with username `' + username + '` not found',
+        // })
+        res.render('404', { url: req.url, error: '404 Not found' });
+
       } else {
         if(user.photo_profile === undefined) {
           user.photo_profile = 'https://gravatar.com/avatar/' + utility.md5(user.email) + '?s=200&d=retro'
@@ -157,10 +159,6 @@ exports.user_profile = function (req, res, next) {
 }
 
 exports.getForgotPassword = function (req, res) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-
   res.render('users/forgot-password', {
     title: 'Forgot Password'
   });
@@ -191,7 +189,7 @@ exports.postForgotPassword = function (req, res) {
         });
       });
     }, function(token, user, next) {
-        user.url_reset_password = req.protocol + '://' + req.headers.host + '/reset-password/' + token
+        user.url_reset_password = req.protocol + '://' + req.headers.host + '/reset/' + token
 
         Mailer.sendOne('forgot-password', "Trick.JS - Password Reset", user, function (err, responseStatus, html, text){
           next(err, responseStatus);
@@ -203,5 +201,69 @@ exports.postForgotPassword = function (req, res) {
         errorHelper.custom(res, err);
       }
       return res.json({message: 'success', status: 200});
+    });
+}
+
+
+exports.getResetPassword = function (req, res) {
+  User
+    .findOne({ reset_password_token: req.params.token })
+    .where('reset_password_expires').gt(Date.now())
+    .exec(function (err, user) {
+      if(user) {
+        res.render('users/reset-password', {
+          title: 'Forgot Password'
+        });
+      } else {
+        req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+        return res.redirect('/');
+      }
+    })
+
+}
+
+exports.postResetPassword = function (req, res) {
+
+  req.assert('password', 'Password must be at least 6 characters long.').len(6);
+  req.assert('confirm_password', 'Please enter confirm password same with password.').equals(req.body.password);
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    err.status = 500;
+    errorHelper.custom(res, errors);
+  }
+
+  async.waterfall([
+    function(done) {
+      User
+        .findOne({ reset_password_token: req.params.token })
+        .where('reset_password_expires').gt(Date.now())
+        .exec(function(err, user) {
+          if (!user) {
+            return errorHelper.custom(res, { msg : 'Password reset token is invalid or has expired.', code: 410 });
+          }
+
+          user.password = req.body.password;
+          user.reset_password_token = '';
+          user.reset_password_expires = '';
+
+          user.save(function(err) {
+            if(err) {
+              return errorHelper.mongoose(res, err);
+            }
+            done(user);
+          });
+        });
+    }], function(user) {
+      user.url_login = req.protocol + '://' + req.headers.host + '/login'
+
+      Mailer.sendOne('reset-password', "Trick.JS - Your password has been changed", user, function (err, responseStatus, html, text) {
+        if(err) {
+          return errorHelper.custom(res, { msg : err, code: 500 });
+        } else {
+          return res.json({message : 'Success! Your password has been changed.', code: 200 });
+        }
+      })
     });
 }

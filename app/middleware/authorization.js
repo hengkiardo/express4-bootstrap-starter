@@ -11,6 +11,14 @@ exports.requiresLogin = function (req, res, next) {
   res.redirect('/login')
 }
 
+exports.hasLogin = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    res.redirect('/')
+  } else {
+    next()
+  }
+}
+
 
 /*
  *  User authorization routing middleware

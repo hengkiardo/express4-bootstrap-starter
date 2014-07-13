@@ -103,7 +103,7 @@ exports.create = function (req, res, next) {
  */
 
 exports.show = function (req, res, next) {
-  user = req.user
+  var user = req.user;
   res.render('users/show', {
     title: user.name,
     user: user

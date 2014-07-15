@@ -49,12 +49,16 @@ module.exports = function (app, express, passport) {
 
   app.use(multer());
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.urlencoded({
+    extended: true
+    }));
   app.use(expressValidator());
   app.use(methodOverride());
 
   app.use(cookieParser('notagoodsecretnoreallydontusethisone'));
   app.use(session({
+    resave: true,
+    saveUninitialized: true,
     secret: pkg.name,
     store: new MongoStore({
       url: app.config.database.url,

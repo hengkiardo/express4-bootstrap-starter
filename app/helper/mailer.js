@@ -1,11 +1,11 @@
-var _ = require('lodash');
-var path = require('path');
-var config = require('../config/config')
-var templatesDir = path.resolve(config.root + '/app/views/mailer');
-var nodemailer = require('nodemailer');
-var emailTemplates = require('email-templates');
+var _              = require('lodash')
+var path           = require('path')
+var config         = require('../config/config')
+var templatesDir   = path.resolve(config.root + '/app/views/mailer')
+var nodemailer     = require('nodemailer')
+var emailTemplates = require('email-templates')
 
-var transport = nodemailer.createTransport("SMTP", {
+var transport = nodemailer.createTransport({
       service: 'Mailgun',
       auth: {
         user: config.mailgun.user,
@@ -16,14 +16,14 @@ var transport = nodemailer.createTransport("SMTP", {
 exports.sendOne = function(temp, subject, obj, fn) {
   emailTemplates(templatesDir, function(err, template) {
     if (err) {
-      console.log(err);
+      console.log(err)
     } else {
 
-      var locals = obj;
+      var locals = obj
 
       template(temp, locals, function(err, html, text) {
         if (err) {
-          console.log(err);
+          console.log(err)
         } else {
 
           transport.sendMail({
@@ -35,9 +35,9 @@ exports.sendOne = function(temp, subject, obj, fn) {
             text: text
           }, function(err, responseStatus) {
             if (err) {
-              console.log(err);
+              console.log(err)
             } else {
-              return fn(null, responseStatus.message, html, text);
+              return fn(null, responseStatus.message, html, text)
             }
           });
 

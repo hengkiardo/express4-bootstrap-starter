@@ -51,7 +51,8 @@ module.exports = function (app, express, passport) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
-    }));
+  }));
+
   app.use(expressValidator());
   app.use(methodOverride());
 
@@ -99,7 +100,7 @@ module.exports = function (app, express, passport) {
 
   // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(responseTime());
+    app.use(responseTime(5));
   } else {
     app.use(compression({
       filter: function (req, res) { return /json|text|javascript|css/.test(res.getHeader('Content-Type')) },

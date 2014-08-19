@@ -2,10 +2,12 @@ module.exports = (grunt) ->
 
   config = require(__dirname + "/app/config/config")
 
+  require('time-grunt') grunt
+
   ###
   Dynamically load npm tasks
   ###
-  require("load-grunt-tasks") grunt
+  require('jit-grunt') grunt
 
   grunt.initConfig
 

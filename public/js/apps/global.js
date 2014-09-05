@@ -20,8 +20,6 @@ if(window.isLogin) {
 
     App.User.session = currentUser;
 
-    console.log(App.User.session);
-
   } else {
     $.ajax({
         url : App.API_BaseUrl + '/user/current/'

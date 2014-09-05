@@ -78,9 +78,15 @@ module.exports = function (app, express, passport) {
   var csrfExclude = ['/api/trick/import'];
   app.use(function(req, res, next) {
 
-    if (_.contains(csrfExclude, req.path)) return next();
+    var path = req.path.split('/')[1];
+    if (/api/i.test(path)) {
+      return next();
+    } else {
 
-    csrf(req, res, next);
+      if (_.contains(csrfExclude, req.path)) return next();
+
+      csrf(req, res, next);
+    }
   });
 
   app.use(views_helpers(pkg.name));

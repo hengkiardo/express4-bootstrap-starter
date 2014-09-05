@@ -27,7 +27,7 @@ var Home = App.Home = {
           console.log('Failed to load templates from <code>' + Trick.mustacheTemplateDir + '</code>');
         })
         .done(function () {
-          Home.getAllTrick(blockHome);
+          Home.getAllTrick('.block-tricks');
         });
     }
   },
@@ -41,7 +41,7 @@ var Home = App.Home = {
       }
     })
     .done(function(res) {
-      var list_tricks = res.data;
+      var list_tricks = res.data.tricks;
 
       App.Trick.renderTrick(el, list_tricks);
 

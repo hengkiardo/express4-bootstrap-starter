@@ -49,6 +49,10 @@ footer {
 }
 
 .btn {
+  &:active,
+  &:focus {
+    outline: 0;
+  }
   &-twitter, &-facebook {
     margin: 0 auto;
     display: block;
@@ -177,6 +181,42 @@ form {
 .trick-item {
   width: 282px;
   float: left;
+  .box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.22));
+
+  &:hover {
+
+    .like-edit-button-wrapper {
+      display: block;
+    }
+  }
+
+  .trick-holder {
+    &:hover {
+      .hover-mask {
+        background: rgba(255, 255, 255, 0.2)
+      }
+    }
+  }
+
+  .hover-mask {
+    .transition(background 0.04s linear);
+    border-radius: 6px 6px 0 0;
+    box-shadow: none;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+  }
+
+  .like-edit-button-wrapper {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 101;
+  }
 
   a {
     text-decoration: none;

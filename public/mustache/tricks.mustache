@@ -1,23 +1,43 @@
 <script id="trickItem" type="text/template">
-<div class="pad-none m-r-sm b m-b trick-item">
-  <figure class="thumb-btn">
-    <img src="/screenshot/{{screenshot}}">
-  </figure>
-  <div class="panel-body b-t">
-    <h4 class="pad-none m-n text-md">
-      <a href="{{origin_url}}" target="_blank">{{title}}</a>
-      </h4>
+<div class="pad-none m-r-sm m-b trick-item pos-rlt" data-id="{{_id}}">
+  <div class="like-edit-button-wrapper">
+    {{#is_mine}}
+    <button class="btn btn-default edit-button">
+      <i class="fa fa-pencil text"></i>
+    </button>
+    {{/is_mine}}
+    {{^is_mine}}
+    <button class="btn btn-default like-button" data-toggle="button">
+      <i class="fa fa-thumbs-up text"></i>
+      <i class="fa fa-thumbs-up text-active text-danger"></i>
+    </button>
+    {{/is_mine}}
   </div>
 
-  {{#user}}
-  <div class="b-t pad-10">
-    <a href="/{{username}}" target="_blank" title="{{username}}">
-      <span class="thumb-sm avatar b">
-        <img src="{{photo_profile}}" width="40" height="40">
-      </span>
-    </a>
-    <a href="/{{username}}" target="_blank" title="{{username}}"><span class="text-xs">{{username}}</span></a>
+  <div class="trick-holder pos-rlt">
+    <figure class="thumb-btn">
+      <img src="/screenshot/{{screenshot}}">
+    </figure>
+    <div class="hover-mask"></div>
   </div>
-  {{/user}}
+  <div class="trick-meta">
+    <div class="panel-body b-t">
+      <h4 class="pad-none m-n text-md">
+        <a href="{{origin_url}}" target="_blank">{{title}}</a>
+        </h4>
+    </div>
+  </div>
+  <div class="trick-credit">
+    {{#user}}
+    <div class="b-t pad-10">
+      <a href="/{{username}}" target="_blank" title="{{username}}">
+        <span class="thumb-sm avatar b">
+          <img src="{{photo_profile}}" width="40" height="40">
+        </span>
+      </a>
+      <a href="/{{username}}" target="_blank" title="{{username}}"><span class="text-xs">{{username}}</span></a>
+    </div>
+    {{/user}}
+  </div>
 </div>
 </script>

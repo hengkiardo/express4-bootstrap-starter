@@ -4,6 +4,7 @@ var multipart = require("multipart");
 var sys = require("sys");
 var fs = require("fs");
 var config = require('../../config/config');
+var utils = require(config.root + '/app/helper/utils');
 var cheerio = require('cheerio');
 var _ = require('lodash');
 var mongoose = require('mongoose');
@@ -14,8 +15,6 @@ var moment = require('moment');
 exports.import = function (req, res, next) {
   var filePath = req.files.files.path;
   var mimeType = req.files.files.mimetype;
-
-  console.log('text/html' == mimeType)
 
   if('text/html' == mimeType) {
     var htmlString = fs.readFileSync(filePath).toString();
@@ -50,6 +49,6 @@ exports.import = function (req, res, next) {
     var errPrint = {}
     errPrint.status = 415;
     errPrint.message = 'Unsupported Media Type'
-    return res.send(200, errPrint)
+    return utils.responses(res, 415, errPrint)
   }
 }

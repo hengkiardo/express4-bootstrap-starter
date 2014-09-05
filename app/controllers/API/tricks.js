@@ -1,13 +1,19 @@
 var config = require('../../config/config');
 var mongoose = require('mongoose');
 var Trick = mongoose.model('Trick');
-var errorHelper = require(config.root + '/app/helper/errors');
+var utils = require(config.root + '/app/helper/utils');
 var screenshot = require('url-to-screenshot');
 var crypto = require('crypto');
 var request = require('request');
 var fs = require('fs');
 var _ = require('lodash');
 
+exports.load = function(req, res, next) {
+  Trick.load(req.params.trickId, function (err, trick) {
+    req.trick = trick
+    next()
+  })
+}
 /**
  * Create an Tricks
  * POST : '/api/trick/create'
@@ -16,22 +22,27 @@ exports.create = function (req, res, next) {
   var trick = new Trick(req.body)
   trick.user = req.user
 
-  trick.screenShoot(req.body.origin_url, function (err) {
-    if (!err) {
-      return res.jsonp(trick);
-    } else {
-      var errPrint     = {}
-      errPrint.status  = 400
+  trick.screenShoot(res,req.body.origin_url)
+}
 
-      if ( err.code == 11000 ) {
-        errPrint.message = 'Trick with title '+ trick.title + 'already exist';
-      } else {
-        errPrint.message = err.message
-      }
+exports.delete = function (req, res, next) {
 
-      errPrint.data    = err.errors
-      return res.send(400, errPrint)
-    }
+  var trick = req.trick
+
+  var data = req.body
+
+  if (!_.isEmpty(data) && _.isObject(data) ) {
+    trick = _.assign(trick, data);
+  }
+
+  trick.is_active = false
+  trick.updatedAt = new Date().toISOString()
+
+  trick.save(function(err, doc) {
+
+    if(err) return utils.responses(res, 500, err)
+
+    return utils.responses(res, 200, trick );
   })
 }
 
@@ -44,24 +55,25 @@ exports.getAll = function( req, res, next) {
     page: page
   };
 
-  var condition = options || {};
+  var condition = { is_active: true }
 
-  Trick.find()
+  Trick
+    .find(condition)
     .sort({createdAt: -1})
     .skip(options.perPage * options.page)
     .limit(options.perPage)
     .populate('user', 'username photo_profile email')
     .exec(function(err, tricks) {
 
-      if(err) {
-        errorHelper.mongoose(res, err);
-      };
+      if(err) return utils.responses(res, 500, err)
 
-      var resultPrint     = {}
-      resultPrint.status  = 200
-      resultPrint.message = 'success'
-      resultPrint.data    = tricks
-      return res.json(200, resultPrint)
+      Trick.count(condition, function (err, count) {
+
+        if (err) return errorHelper.mongoose(res, err);
+
+        return utils.responses(res, 200, { tricks: tricks, tricks_count: count} );
+
+      });
     })
 }
 
@@ -76,27 +88,28 @@ exports.listTrickByUser = function( req, res, next) {
     page: page
   };
 
-  var condition = options || {};
+  var condition = {
+      $and: [
+        { user : user_id },
+        { is_active: true }
+      ]
+    }
 
-  Trick.find({user : user_id})
+  Trick
+    .find(condition)
     .sort({createdAt: -1})
     .skip(options.perPage * options.page)
     .limit(options.perPage)
     .populate('user', 'username photo_profile email')
     .exec(function(err, tricks) {
 
-      if(err) {
-        errorHelper.mongoose(res, err);
-      };
+      if (err) return utils.responses(res, 500, err)
 
-      Trick.count({user : user_id}, function (err, count) {
+      Trick.count(condition, function (err, count) {
 
-        var resultPrint          = {}
-        resultPrint.status       = 200
-        resultPrint.message      = 'success'
-        resultPrint.tricks       = tricks
-        resultPrint.tricks_count = count
-        return res.json(200, resultPrint)
+        if (err) return errorHelper.mongoose(res, err);
+
+        return utils.responses(res, 200, { tricks: tricks, tricks_count: count} );
 
       });
 
@@ -142,7 +155,6 @@ exports.screenShootUrl = function(req, res) {
     renderDefaultImage(res);
   }
 }
-
 
 var renderDefaultImage = function (res) {
   var readStream = fs.createReadStream( config.root + '/public/img/photo.png' );

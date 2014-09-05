@@ -14,16 +14,12 @@ API.tricks = require(config.root + '/app/controllers/API/tricks');
 API.Uploader = require(config.root + '/app/controllers/API/uploader');
 API.Users = require(config.root + '/app/controllers/API/users');
 
-Route.get('/', function(req, res) {
-  res.render('index', {
-    title: 'Express 4'
-  });
-});
 
 // API Routes
 Route
   .all('/api/*', Auth.APIrequiresUserLogin)
   .post('/api/trick/create', API.tricks.create)
+  .post('/api/trick/delete/:trickId', API.tricks.delete)
   .get('/api/trick', API.tricks.getAll)
   .get('/api/trick/tricks-user', API.tricks.listTrickByUser)
   .post('/api/trick/import', API.Uploader.import)
@@ -59,5 +55,11 @@ Route
   .get('/trick/create', Auth.requiresLogin, trickController.create)
   .get('/:username/tricks', Auth.requiresLogin, trickController.myTrick)
   .get('/:username', userController.user_profile)
+  .get('/', function(req, res) {
+    res.render('index', {
+      title: 'Express 4'
+    });
+  })
+  .param('trickId', API.tricks.load)
 
 module.exports = Route

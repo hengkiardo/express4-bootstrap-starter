@@ -1,7 +1,8 @@
 var phantom = require('phantom-render-stream');
-var screenshot = phantom();
 var fs = require('fs');
 var config = require('../config/config');
+var screenshot = phantom(config.phantom);
+var utils = require(config.root + '/app/helper/utils');
 var crypto = require('crypto');
 var request = require('request');
 
@@ -42,14 +43,22 @@ var Trick = new Schema({
     screenshot: {
       type: String
     },
-    views_count: {
+    view_counts: {
       type: Number,
       default: 0
     },
-    favorites_count: {
+    click_counts: {
       type: Number,
       default: 0
-    }
+    },
+    favorite_counts: {
+      type: Number,
+      default: 0
+    },
+    is_active: {
+      type: Boolean,
+      default: true
+    },
 });
 
 Trick.plugin(slug('title'));
@@ -65,7 +74,7 @@ Trick.methods = {
    * @api private
    */
 
-  screenShoot: function (url, cb) {
+  screenShoot: function (res, url) {
 
     if (!url || !url.length) return this.save(cb)
 
@@ -85,27 +94,61 @@ Trick.methods = {
 
       var hasFileName = crypto.createHmac('sha1', makeSalt).update( url ).digest('hex');
 
+      self.screenshot = hasFileName + '.' + opts.format;
+
       var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
 
       var outputStream = fs.createWriteStream(location_screenshoot);
 
       screenshot(url).pipe(outputStream);
 
-      self.screenshot = hasFileName + '.' + opts.format;
+      self.save(function (err, doc) {
 
-      // outputStream.on('finish', function () {
+        if (err) {
+          var errPrint     = {}
 
-      //   console.log('file has been written');
+          if ( err.code == 11000 ) {
+            errPrint.message = 'Trick with title '+ doc.title + 'already exist';
+            errPrint.status  = 409
+          } else {
+            errPrint = err
+            errPrint.status  = 409
+          }
 
-        self.save(cb);
-      // });
 
+          errPrint.errors    = err.errors
+
+          return utils.responses(res, 409, errPrint);
+
+        } else {
+
+          outputStream.on('open', function() {
+            console.log('Screenshoot the url is progress')
+            // return utils.responses(res, 206, {message: 'Screenshoot the url is progress', status: 206});
+          });
+
+          outputStream.on('end', function() {
+            console.log("EOF");
+          });
+
+          outputStream.on('error', function(err) {
+            console.log("Error screenshot the url")
+            // err.message = "Error screenshot the url"
+            // return utils.responses(res, 500, err);
+            // outputStream.end();
+          });
+
+          outputStream.on('finish', function() {
+            console.log("screenshot the url just finish")
+          })
+          return utils.responses(res, 200, doc);
+        }
+      });
     })
   },
 }
 
 Trick.statics = {
-
   /**
    * Find article by id
    *
@@ -115,9 +158,7 @@ Trick.statics = {
    */
 
   load: function (id, cb) {
-    this.findOne({ _id : id })
-      .populate('user', 'email username photo_profile')
-      .exec(cb)
+    this.findOne({ _id : id }).exec(cb)
   },
 
   /**

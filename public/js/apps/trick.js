@@ -14,9 +14,9 @@ var Trick = App.Trick = {
     This.tricksByUser();
   },
   tricksByUser: function() {
-    var blockUserTrick = $('.block-tricks-user');
+    var blockUserTrick = '.block-tricks-user';
 
-    if(blockUserTrick.length > 0) {
+    if($(blockUserTrick).length > 0) {
       $.Mustache
         .load(Trick.mustacheTemplateDir)
         .fail(function () {
@@ -28,13 +28,10 @@ var Trick = App.Trick = {
     }
   },
   getTrickByUser: function(el) {
-    var user_id = el.data('id');
-    var username = el.data('username');
+    var block = $(el);
 
-    var from_jStorage = $.jStorage.get('tricks-by-'+ username);
-    console.log(from_jStorage);
-
-    if( _.isNull(from_jStorage) ) {
+    var user_id = block.data('id');
+    var username = block.data('username');
       $.ajax({
         url: App.API_BaseUrl + '/trick/tricks-user',
         method: 'GET',
@@ -47,8 +44,8 @@ var Trick = App.Trick = {
         }
       })
       .done(function(res) {
-        var list_tricks = res.tricks;
-        var tricks_count = res.tricks_count;
+        var list_tricks = res.data.tricks;
+        var tricks_count = res.data.tricks_count;
 
         Trick.renderTrick(el, list_tricks);
 
@@ -62,44 +59,34 @@ var Trick = App.Trick = {
         }
       })
       .fail (function(jqXHR, textStatus) {
-        Notifier.show('there is something wrong to load catalogue, please try again', 'err');
+        console.error(jqXHR.responseJSON.message)
       })
-
-    } else {
-      console.log('from jStorage');
-      var list_tricks = from_jStorage.tricks;
-
-      var tricks_count = from_jStorage.tricks_count;
-
-      if($('.profile-card').length > 0) {
-        $('.profile-card').find('.tricks-count').html(tricks_count);
-      };
-
-      Trick.renderTrick(el, list_tricks);
-    }
   },
   renderTrick: function(el, list_tricks) {
 
-    var render = render || el;
+    var render = render || $(el);
 
     render.html('');
 
     _.each(list_tricks, function(trick) {
 
-      if(trick.user.photo_profile === undefined) {
+      if (trick.user.photo_profile === undefined) {
         trick.user.photo_profile = 'https://gravatar.com/avatar/' + md5(trick.user.email) + '?s=200&d=retro'
+      }
+
+      if (trick.user._id === App.User.session._id) {
+        trick.is_mine = true
       }
 
       if(!_.isArray(trick.tags)) {
         trick.tags = trick.tags.split(/\s*,\s*/);
       }
-      console.log(trick.user);
       delete trick.user.email;
 
       render.append($.Mustache.render('trickItem', trick ));
     });
 
-    var container = document.querySelector('.block-tricks-user');
+    var container = document.querySelector(el);
     var msnry;
     // initialize Masonry after all images have loaded
     imagesLoaded( container, function() {
@@ -150,9 +137,12 @@ var Trick = App.Trick = {
           formNewTrick.find('input[type=text]').val('');
           formNewTrick.find('textarea').val('');
 
-          setTimeout(function() {
-            window.location.href = App.BaseUrl + '/' + App.User.session.username+ '/tricks'
-          }, 5000);
+          // setTimeout(function() {
+          //   window.location.href = App.BaseUrl + '/' + App.User.session.username+ '/tricks'
+          // }, 5000);
+        })
+        .always(function(res) {
+          console.log(res)
         });
       }
     });
@@ -164,19 +154,16 @@ var Trick = App.Trick = {
       $('#fileupload').fileupload({
         url: App.API_BaseUrl + '/trick/import',
         dataType: 'json',
+        error: function(res, data) {
+          $('#progress').fadeOut();
+          Notifier.show('Error ' + res.status + ' : ' + res.responseJSON.message, 'err');
+        },
         done: function (e, data) {
           var res = data.result;
-
-          if(res.status == 200) {
-
-          } else {
-            Notifier.show(res.message, err);
-          }
 
           setTimeout(function(){
             $('#progress').fadeOut();
           }, 3000);
-
         },
         progressall: function (e, data) {
             $('#progress').fadeIn();

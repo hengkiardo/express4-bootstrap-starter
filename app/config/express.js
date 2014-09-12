@@ -1,4 +1,4 @@
-var logger           = require('morgan');
+var morgan           = require('morgan');
 var path             = require('path');
 var responseTime     = require('response-time');
 var methodOverride   = require('method-override');
@@ -42,9 +42,12 @@ module.exports = function (app, express, passport) {
   app.use(favicon(path.join(app.config.root, 'public/favicon.png')));
   app.use(allowCrossDomain);
   if (env === 'development') {
-    app.use(logger('dev'))
+    app.use(morgan('dev'))
   } else {
-    app.use(logger())
+    app.use(morgan('combined', {
+      skip: function (req, res) { return res.statusCode < 400 },
+      stream: require('fs').createWriteStream( app.config.root + '/access.log', {flags: 'a'})
+    }))
   };
 
   app.use(multer());

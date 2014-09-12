@@ -44,8 +44,8 @@ var Trick = App.Trick = {
         }
       })
       .done(function(res) {
-        var list_tricks = res.tricks;
-        var tricks_count = res.tricks_count;
+        var list_tricks = res.data.tricks;
+        var tricks_count = res.data.tricks_count;
 
         Trick.renderTrick(el, list_tricks);
 

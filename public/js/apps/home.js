@@ -41,7 +41,7 @@ var Home = App.Home = {
       }
     })
     .done(function(res) {
-      var list_tricks = res.tricks;
+      var list_tricks = res.data.tricks;
 
       App.Trick.renderTrick(el, list_tricks);
 

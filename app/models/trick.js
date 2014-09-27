@@ -108,7 +108,7 @@ Trick.methods = {
           var errPrint     = {}
 
           if ( err.code == 11000 ) {
-            errPrint.message = 'Trick with title '+ doc.title + 'already exist';
+            errPrint.message = 'Trick with title '+ self.title + 'already exist';
             errPrint.status  = 409
           } else {
             errPrint = err

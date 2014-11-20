@@ -77,7 +77,7 @@ Trick.methods = {
    * @api private
    */
 
-  screenShoot: function (res, url) {
+  screenShoot: function (res, url, cb) {
 
     if (!url || !url.length) return this.save(cb)
 

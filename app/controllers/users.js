@@ -6,8 +6,8 @@ var async = require('async');
 var config = require('../config/config');
 var utility = require('utility');
 var crypto = require('crypto');
-var errorHelper = require(config.root + '/app/helper/errors');
-var Mailer   = require(config.root + '/app/helper/mailer');
+var errorHelper = require(config.root + '/helper/errors');
+var Mailer   = require(config.root + '/helper/mailer');
 
 var login = function (req, res) {
   var redirectTo = req.session.returnTo ? req.session.returnTo : '/'

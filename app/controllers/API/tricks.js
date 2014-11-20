@@ -1,7 +1,7 @@
 var config = require('../../config/config');
 var mongoose = require('mongoose');
 var Trick = mongoose.model('Trick');
-var utils = require(config.root + '/app/helper/utils');
+var utils = require(config.root + '/helper/utils');
 var screenshot = require('url-to-screenshot');
 var crypto = require('crypto');
 var request = require('request');

@@ -41,7 +41,7 @@ module.exports = function (app, express, passport) {
   app.disable('x-powered-by');
 
   // Express use middlewares
-  app.use(favicon(path.join(app.config.root, 'public/favicon.png')));
+  app.use(favicon(path.join(__dirname, '../../public/favicon.png')));
   app.use(allowCrossDomain);
   if (env === 'development') {
     app.use(morgan('dev'))

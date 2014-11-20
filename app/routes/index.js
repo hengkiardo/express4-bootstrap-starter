@@ -3,16 +3,16 @@ var Route = express.Router();
 var config = require('../config/config');
 var passport = require('passport');
 var lodash = require('lodash')
-var Auth = require(config.root + '/app/middleware/authorization');
+var Auth = require(config.root + '/middleware/authorization');
 var fs = require('fs');
 
-var userController = require(config.root + '/app/controllers/users');
-var trickController = require(config.root + '/app/controllers/tricks');
+var userController = require(config.root + '/controllers/users');
+var trickController = require(config.root + '/controllers/tricks');
 
 var API = {}
-API.tricks = require(config.root + '/app/controllers/API/tricks');
-API.Uploader = require(config.root + '/app/controllers/API/uploader');
-API.Users = require(config.root + '/app/controllers/API/users');
+API.tricks = require(config.root + '/controllers/API/tricks');
+API.Uploader = require(config.root + '/controllers/API/uploader');
+API.Users = require(config.root + '/controllers/API/users');
 
 
 // API Routes

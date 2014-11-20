@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User     = mongoose.model('User');
 var config = require('../../config/config');
-var utils = require(config.root + '/app/helper/utils');
+var utils = require(config.root + '/helper/utils');
 var async    = require('async');
 
 exports.get_profile = function (req, res, next) {

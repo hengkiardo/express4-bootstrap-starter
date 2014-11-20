@@ -1,16 +1,19 @@
-var phantom = require('phantom-render-stream');
-var fs = require('fs');
-var config = require('../config/config');
-var screenshot = phantom(config.phantom);
-var utils = require(config.root + '/app/helper/utils');
-var crypto = require('crypto');
-var request = require('request');
+"use strict";
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var phantom         = require('phantom-render-stream');
+var fs              = require('fs');
+var config          = require('../config/config');
+var screenshot      = phantom(config.phantom);
+
+var utils           = require(config.root + '/helper/utils');
+var crypto          = require('crypto');
+var request         = require('request');
+
+var mongoose        = require('mongoose');
+var Schema          = mongoose.Schema;
 var CreateUpdatedAt = require('mongoose-timestamp');
-var slug = require('mongoose-slug');
-var mongooseTypes = require("mongoose-types");
+var slug            = require('mongoose-slug');
+var mongooseTypes   = require("mongoose-types");
 
 mongooseTypes.loadTypes(mongoose, "url");
 

@@ -1,14 +1,10 @@
 module.exports = function(grunt) {
   "use strict";
 
-  require('time-grunt')(grunt);
-  require('jit-grunt')(grunt);
+  require('time-grunt')(grunt)
+  require('jit-grunt')(grunt)
 
-  if (process.env.NODE_ENV == 'development') {
-    var config = require(__dirname + "/app/config/config.example");
-  } else {
-    var config = require(__dirname + "/app/config/config");
-  }
+  var config = require(__dirname + "/app/config/config")
 
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),

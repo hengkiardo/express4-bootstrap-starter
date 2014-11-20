@@ -1,6 +1,8 @@
+"use strict";
+
 var morgan           = require('morgan');
 var path             = require('path');
-var responseTime     = require('response-time');
+var responseTime    = require('response-time');
 var methodOverride   = require('method-override');
 var multer           = require('multer');
 var compression      = require('compression');
@@ -50,20 +52,21 @@ module.exports = function (app, express, passport) {
     }))
   };
 
-  app.use(multer());
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
-
-  app.use(expressValidator());
-  app.use(methodOverride());
+  app.use(bodyParser.urlencoded({extended: true}))
+  app.use(bodyParser.json())
+  app.use(multer())
+  app.use(expressValidator())
+  app.use(methodOverride())
 
   app.use(cookieParser('notagoodsecretnoreallydontusethisone'));
   app.use(session({
+    name: [pkg.name,'.sid'].join(),
     resave: true,
     saveUninitialized: true,
     secret: pkg.name,
+    genid: function(req) {
+      return require('node-uuid').v4() // use UUIDs for session IDs
+    },
     store: new MongoStore({
       url: app.config.database.url,
       collection : 'sessions',
@@ -109,7 +112,7 @@ module.exports = function (app, express, passport) {
 
   // will print stacktrace
   if (app.get('env') === 'development') {
-    app.use(responseTime(5));
+    app.use(responseTime());
   } else {
     app.use(compression({
       filter: function (req, res) { return /json|text|javascript|css/.test(res.getHeader('Content-Type')) },

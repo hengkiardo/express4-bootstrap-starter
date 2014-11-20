@@ -6,10 +6,6 @@ exports.randomString = function (length) {
   return result;
 }
 
-exports.prettyJSON = function(data) {
-  return require("prettyjson").render(data);
-}
-
 exports.responses = function(res, status, obj) {
   var resultPrint     = {}
   if (status == 200) {

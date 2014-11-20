@@ -2,6 +2,7 @@
 
 ExpressJS 4 Starter
 ==========================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/aredo/express4-bootstrap-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 Lightweight Bootstrap NodeJS Apps Build Using ExpressJS 4, MongoDB/Mongoose, Authentication with Passport.js, Jade and GruntJS as Task Automation

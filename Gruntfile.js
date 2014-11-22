@@ -142,4 +142,7 @@ module.exports = function(grunt) {
   grunt.registerTask("dev", ["clean:dev", "less:compileCore", "less:compileCustom", "concat"]);
   grunt.registerTask("default", ["dev", "concurrent:task1"]);
   grunt.registerTask("production", ["clean:build", "less:compileCore", "less:compileCustom", "cssmin", "copy", "concat", "uglify"]);
+  grunt.registerTask('heroku', 'dev');
+  grunt.registerTask('heroku:development', 'dev');
+  grunt.registerTask('heroku:production', 'production');
 };

@@ -22,11 +22,30 @@ module.exports = function(grunt) {
         separator: ";"
       },
       bootstrap: {
-        src: ["public/js/bootstrap/transition.js", "public/js/bootstrap/alert.js", "public/js/bootstrap/button.js", "public/js/bootstrap/carousel.js", "public/js/bootstrap/collapse.js", "public/js/bootstrap/dropdown.js", "public/js/bootstrap/modal.js", "public/js/bootstrap/tooltip.js", "public/js/bootstrap/popover.js", "public/js/bootstrap/scrollspy.js", "public/js/bootstrap/tab.js", "public/js/bootstrap/affix.js"],
+        src: [
+          "public/js/bootstrap/transition.js",
+          "public/js/bootstrap/alert.js",
+          "public/js/bootstrap/button.js",
+          // "public/js/bootstrap/carousel.js",
+          "public/js/bootstrap/collapse.js",
+          "public/js/bootstrap/dropdown.js",
+          "public/js/bootstrap/modal.js",
+          "public/js/bootstrap/tooltip.js",
+          "public/js/bootstrap/popover.js",
+          // "public/js/bootstrap/scrollspy.js",
+          "public/js/bootstrap/tab.js",
+          // "public/js/bootstrap/affix.js"
+        ],
         dest: "public/js/bootstrap.js"
       },
       apps: {
-        src: ["public/js/plugins/nprogress.js", "public/js/apps/global.js", "public/js/apps/user.js", "public/js/apps/home.js", "public/js/apps/trick.js"],
+        src: [
+          "public/js/plugins/nprogress.js",
+          "public/js/apps/global.js",
+          "public/js/apps/user.js",
+          "public/js/apps/home.js",
+          "public/js/apps/trick.js"
+        ],
         dest: "public/js/apps.js"
       },
       plugins: {
@@ -90,19 +109,17 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {
-        files: [
-          {
-            expand: true,
-            cwd: "public/img/",
-            src: ["**"],
-            dest: "public/assets/img"
-          }, {
-            expand: true,
-            cwd: "public/fonts/",
-            src: ["**"],
-            dest: "public/assets/fonts"
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: "public/img/",
+          src: ["**"],
+          dest: "public/assets/img"
+        }, {
+          expand: true,
+          cwd: "public/fonts/",
+          src: ["**"],
+          dest: "public/assets/fonts"
+        }]
       }
     },
     nodemon: {

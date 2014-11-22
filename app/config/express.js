@@ -105,7 +105,7 @@ module.exports = function (app, express, passport) {
     }
     next()
   });
-  app.use(express.static(path.join(app.config.root, 'public')));
+  app.use(express.static(path.normalize(__dirname + '/../../public')));
 
   /** ROUTES Apps */
   app.use(routes);

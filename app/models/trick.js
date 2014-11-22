@@ -2,6 +2,7 @@
 
 var phantom         = require('phantom-render-stream');
 var fs              = require('fs');
+var path             = require('path');
 var config          = require('../config/config');
 var screenshot      = phantom(config.phantom);
 
@@ -99,7 +100,7 @@ Trick.methods = {
 
       self.screenshot = hasFileName + '.' + opts.format;
 
-      var location_screenshoot = config.root + '/public/screenshot/' + hasFileName + '.' + opts.format;
+      var location_screenshoot = path.normalize(__dirname + '/../../public') + '/screenshot/' + hasFileName + '.' + opts.format;
 
       var outputStream = fs.createWriteStream(location_screenshoot);
 

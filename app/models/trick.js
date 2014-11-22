@@ -84,7 +84,7 @@ Trick.methods = {
 
     var self = this;
 
-    this.validate(function (err) {
+    this.validate(function (err, cb) {
 
       if (err) return cb(err);
 

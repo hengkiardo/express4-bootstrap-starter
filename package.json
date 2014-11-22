@@ -37,6 +37,7 @@
     "email-templates": "^1.1.2",
     "errorhandler": "^1.2.2",
     "express": "^4.10.*",
+    "express-enforces-ssl": "^1.1.0",
     "express-flash": "0.0.2",
     "express-session": "^1.9.1",
     "express-validator": "^2.7.0",

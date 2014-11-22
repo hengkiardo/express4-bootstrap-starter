@@ -805,6 +805,11 @@
         }
       }
     },
+    "express-enforces-ssl": {
+      "version": "1.1.0",
+      "from": "express-enforces-ssl@",
+      "resolved": "https://registry.npmjs.org/express-enforces-ssl/-/express-enforces-ssl-1.1.0.tgz"
+    },
     "express-flash": {
       "version": "0.0.2",
       "from": "express-flash@0.0.2",

@@ -7,6 +7,10 @@ var passport = require('passport');
 var config   = require(__dirname + '/app/config/config');
 var app      = express();
 
+app.enable('trust proxy');
+
+app.use(require('express-enforces-ssl')());
+
 app.config = config;
 
 // Database

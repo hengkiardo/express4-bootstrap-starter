@@ -114,7 +114,7 @@ module.exports = function(grunt) {
           watch: ["app", "server.js", "Gruntfile.js", "package.json"],
           delayTime: 1,
           env: {
-            PORT: config.server.port
+            PORT: process.env.PORT || 3001
           },
           cwd: __dirname
         }

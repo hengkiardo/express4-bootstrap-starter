@@ -7,7 +7,7 @@ module.exports = function (ROOT_PATH) {
       hostname: process.env.HOSTNAME || '127.0.0.1',
     },
     database: {
-      url: MONGOHQ_URL || 'mongodb://localhost/express4_bootstrap_starter'
+      url: process.env.MONGOHQ_URL || 'mongodb://localhost/express4_bootstrap_starter'
     },
     BaseApiURL : 'http://'+process.env.HOSTNAME+':3001/api/',
     root     : ROOT_PATH,
@@ -16,7 +16,7 @@ module.exports = function (ROOT_PATH) {
     },
     twitterAuth: true,
     twitter: {
-      consumerKey: process.env.TWITTER_KEY
+      consumerKey: process.env.TWITTER_KEY,
       consumerSecret: process.env.TWITTER_SECRET,
       callbackURL: '/auth/twitter/callback',
       passReqToCallback: true

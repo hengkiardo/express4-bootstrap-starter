@@ -2,9 +2,7 @@ module.exports = function(grunt) {
   "use strict";
 
   require('time-grunt')(grunt)
-  require('jit-grunt')(grunt)
-
-  var config = require(__dirname + "/app/config/config")
+  require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),

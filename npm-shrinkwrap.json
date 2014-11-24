@@ -2868,6 +2868,18 @@
         }
       }
     },
+    "mkdirp": {
+      "version": "0.5.0",
+      "from": "mkdirp@",
+      "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.0.tgz",
+      "dependencies": {
+        "minimist": {
+          "version": "0.0.8",
+          "from": "minimist@0.0.8",
+          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
+        }
+      }
+    },
     "mocha": {
       "version": "2.0.1",
       "from": "mocha@^2.0.1",

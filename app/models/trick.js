@@ -2,13 +2,14 @@
 
 var phantom         = require('phantom-render-stream');
 var fs              = require('fs');
-var path             = require('path');
+var path            = require('path');
 var config          = require('../config/config');
 var screenshot      = phantom(config.phantom);
 
 var utils           = require(config.root + '/helper/utils');
 var crypto          = require('crypto');
 var request         = require('request');
+var mkdirp          = require('mkdirp');
 
 var mongoose        = require('mongoose');
 var Schema          = mongoose.Schema;
@@ -100,54 +101,58 @@ Trick.methods = {
 
       self.screenshot = hasFileName + '.' + opts.format;
 
-      var location_screenshoot = path.normalize(__dirname + '/../../public') + '/screenshot/' + hasFileName + '.' + opts.format;
+      var location_screenshoot = path.normalize(__dirname + '/../../public') + '/screenshot'
+      var fileOutput           =  location_screenshoot + '/' + hasFileName + '.' + opts.format;
 
-      var outputStream = fs.createWriteStream(location_screenshoot);
+      var outputStream = fs.createWriteStream(fileOutput);
 
-      screenshot(url).pipe(outputStream);
+      mkdirp(location_screenshoot, function(err) {
 
-      self.save(function (err, doc) {
+        screenshot(url).pipe(outputStream);
 
-        if (err) {
-          var errPrint     = {}
+        self.save(function (err, doc) {
 
-          if ( err.code == 11000 ) {
-            errPrint.message = 'Trick with title '+ doc.title + 'already exist';
-            errPrint.status  = 409
+          if (err) {
+            var errPrint     = {}
+
+            if ( err.code == 11000 ) {
+              errPrint.message = 'Trick with title '+ doc.title + 'already exist';
+              errPrint.status  = 409
+            } else {
+              errPrint = err
+              errPrint.status  = 409
+            }
+
+
+            errPrint.errors    = err.errors
+
+            return utils.responses(res, 409, errPrint);
+
           } else {
-            errPrint = err
-            errPrint.status  = 409
+
+            outputStream.on('open', function() {
+              console.log('Screenshoot the url is progress')
+              // return utils.responses(res, 206, {message: 'Screenshoot the url is progress', status: 206});
+            });
+
+            outputStream.on('end', function() {
+              console.log("EOF");
+            });
+
+            outputStream.on('error', function(err) {
+              console.log("Error screenshot the url")
+              // err.message = "Error screenshot the url"
+              // return utils.responses(res, 500, err);
+              // outputStream.end();
+            });
+
+            outputStream.on('finish', function() {
+              console.log("screenshot the url just finish")
+            })
+            return utils.responses(res, 200, doc);
           }
-
-
-          errPrint.errors    = err.errors
-
-          return utils.responses(res, 409, errPrint);
-
-        } else {
-
-          outputStream.on('open', function() {
-            console.log('Screenshoot the url is progress')
-            // return utils.responses(res, 206, {message: 'Screenshoot the url is progress', status: 206});
-          });
-
-          outputStream.on('end', function() {
-            console.log("EOF");
-          });
-
-          outputStream.on('error', function(err) {
-            console.log("Error screenshot the url")
-            // err.message = "Error screenshot the url"
-            // return utils.responses(res, 500, err);
-            // outputStream.end();
-          });
-
-          outputStream.on('finish', function() {
-            console.log("screenshot the url just finish")
-          })
-          return utils.responses(res, 200, doc);
-        }
-      });
+        });
+      })
     })
   },
 }

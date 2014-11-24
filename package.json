@@ -45,6 +45,7 @@
     "lodash": "^2.4.1",
     "lusca": "^1.0.2",
     "method-override": "^2.3.0",
+    "mkdirp": "^0.5.0",
     "moment": "^2.8.4",
     "mongoose": "3.8.19",
     "mongoose-error-helper": "0.0.2",

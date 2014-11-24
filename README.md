@@ -1,4 +1,4 @@
-![ExpressJS 4 Starter](http://express4-bootstrap-starter.tukangslicing.net/apple-touch-icon-114-precomposed.png)
+![ExpressJS 4 Starter](https://github.com/aredo/express4-bootstrap-starter/raw/master/public/apple-touch-icon-144-precomposed.png)
 
 ExpressJS 4 Starter
 ==========================

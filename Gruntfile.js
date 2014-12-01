@@ -2,15 +2,23 @@ module.exports = function(grunt) {
   "use strict";
 
   require('time-grunt')(grunt)
-  require('load-grunt-tasks')(grunt);
+  require('jit-grunt')(grunt)
 
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
     watch: {
       all: {
-        files: ["Gruntfile.coffee", "public/js/**/*.js", "public/less/*.less", "public/less/**/*.less"],
+        files: [
+          "Gruntfile.js",
+          "public/js/**/*.js",
+          "public/less/*.less",
+          "public/less/**/*.less"
+        ],
         tasks: [
-          "concurrent"
+          "newer:less",
+          "newer:concat",
+          "jshint",
+          "watch"
         ],
         options: {
           nospawn: true
@@ -18,9 +26,6 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-      options: {
-        separator: ";"
-      },
       bootstrap: {
         src: [
           "public/js/bootstrap/transition.js",
@@ -40,7 +45,7 @@ module.exports = function(grunt) {
       },
       apps: {
         src: [
-          "public/js/plugins/nprogress.js",
+          // "public/js/plugins/nprogress.js",
           "public/js/apps/global.js",
           "public/js/apps/user.js",
           "public/js/apps/home.js",
@@ -55,10 +60,20 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        jshintrc: "js/bootstrap/.jshintrc"
+        reporter: require('jshint-stylish')
       },
-      src: {
-        src: "js/bootstrap/*.js"
+      bootstrap: {
+        options: {
+          jshintrc: "public/js/bootstrap/.jshintrc",
+        },
+        src: "'public/js/bootstrap/*.js'"
+      },
+      web: {
+        jshintrc: "public/js/.jshintrc",
+        src: ['public/js/apps/*.js']
+      },
+      afterConcat: {
+        src: ['public/js/apps.js']
       }
     },
     uglify: {
@@ -128,7 +143,7 @@ module.exports = function(grunt) {
         options: {
           ignore: ["README.md", "node_modules/**", ".DS_Store", "public"],
           ext: "js",
-          watch: ["app", "server.js", "Gruntfile.js", "package.json"],
+          watch: ["app", "public", "server.js", "Gruntfile.js", "package.json"],
           delayTime: 1,
           env: {
             PORT: process.env.PORT || 3001
@@ -138,12 +153,16 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      task1: ["watch", "nodemon"],
-      task3: [
-        "concat"
+      watch: [
+        "watch",
+        "nodemon"
       ],
-      task2: [
-        "less:compileCore",
+      js: [
+        "newer:concat",
+        "jshint"
+      ],
+      css: [
+        "newer:less:compileCore",
         "less:compileCustom"
       ],
       options: {
@@ -157,7 +176,7 @@ module.exports = function(grunt) {
   });
   grunt.registerTask("less-compile", ["clean:dev", "less:compileCore", "less:compileCustom"]);
   grunt.registerTask("dev", ["clean:dev", "less:compileCore", "less:compileCustom", "concat"]);
-  grunt.registerTask("default", ["dev", "concurrent:task1"]);
+  grunt.registerTask("default", ["dev", "concurrent:css", "concurrent:js", "concurrent:watch"]);
   grunt.registerTask("production", ["clean:build", "less:compileCore", "less:compileCustom", "cssmin", "copy", "concat", "uglify"]);
   grunt.registerTask('heroku', 'dev');
   grunt.registerTask('heroku:development', 'dev');

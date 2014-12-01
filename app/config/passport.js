@@ -1,7 +1,7 @@
 var mongoose         = require('mongoose')
 var LocalStrategy    = require('passport-local').Strategy
-var TwitterStrategy  = require('passport-twitter').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy  = require('passport-twitter').Strategy
+var FacebookStrategy = require('passport-facebook').Strategy
 var User             = mongoose.model('User')
 
 module.exports = function (app, passport) {
@@ -70,10 +70,10 @@ module.exports = function (app, passport) {
             user.save(function(err) {
               req.flash('info', { msg: 'Twitter account has been linked.' })
               done(err, user)
-            });
-          });
+            })
+          })
         }
-      });
+      })
 
     } else {
       User.findOne({ 'twitter.id_str': profile.id }, function(err, existingUser) {
@@ -92,10 +92,10 @@ module.exports = function (app, passport) {
 
         user.save(function(err) {
           done(err, user)
-        });
-      });
+        })
+      })
     }
-  }));
+  }))
 
   /**
    * Sign in with Facebook.
@@ -109,56 +109,56 @@ module.exports = function (app, passport) {
           , { email: profile.email }] }
           , function(err, existingUser) {
         if (existingUser) {
-          req.flash('errors', { msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
-          done(err);
+          req.flash('errors', { msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.' })
+          done(err)
         } else {
           User.findById(req.user.id, function(err, user) {
-            user.facebook      = profile;
+            user.facebook      = profile
             user.username      = profile.username
             user.provider      = 'facebook',
             user.facebook      = profile._json
             user.firstname     = user.firstname || profile.first_name
             user.lastname      = user.lastname || profile.last_name
-            user.photo_profile = user.photo_profile || 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+            user.photo_profile = user.photo_profile || 'https://graph.facebook.com/' + profile.id + '/picture?type=large'
 
-            user.tokens.push({ kind: 'facebook', accessToken: accessToken });
+            user.tokens.push({ kind: 'facebook', accessToken: accessToken })
 
             user.save(function(err) {
-              req.flash('info', { msg: 'Facebook account has been linked.' });
-              done(err, user);
-            });
-          });
+              req.flash('info', { msg: 'Facebook account has been linked.' })
+              done(err, user)
+            })
+          })
         }
-      });
+      })
     } else {
       User.findOne({ 'facebook.id' : profile.id }, function(err, existingUser) {
 
-        if (existingUser) return done(null, existingUser);
+        if (existingUser) return done(null, existingUser)
 
         User.findOne({ email: profile._json.email }, function(err, existingEmailUser) {
           if (existingEmailUser) {
-            req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.' });
-            done(err);
+            req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.' })
+            done(err)
           } else {
-            var user = new User();
-            user.email         = profile._json.email;
-            user.facebook      = profile;
+            var user = new User()
+            user.email         = profile._json.email
+            user.facebook      = profile
             user.username      = profile.username
             user.provider      = 'facebook',
             user.facebook      = profile._json
             user.firstname     = user.firstname || profile.first_name
             user.lastname      = user.lastname || profile.last_name
-            user.photo_profile = user.photo_profile || 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+            user.photo_profile = user.photo_profile || 'https://graph.facebook.com/' + profile.id + '/picture?type=large'
 
-            user.tokens.push({ kind: 'facebook', accessToken: accessToken });
+            user.tokens.push({ kind: 'facebook', accessToken: accessToken })
 
             user.save(function(err) {
-              done(err, user);
-            });
+              done(err, user)
+            })
           }
-        });
-      });
+        })
+      })
     }
-  }));
+  }))
 
 }

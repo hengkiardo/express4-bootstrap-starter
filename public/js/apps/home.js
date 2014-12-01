@@ -48,6 +48,6 @@ var Home = App.Home = {
     })
     .fail (function(jqXHR, textStatus) {
       Notifier.show('there is something wrong to load catalogue, please try again', 'err');
-    })
+    });
   }
-}
+};

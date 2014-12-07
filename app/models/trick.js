@@ -102,11 +102,11 @@ Trick.methods = {
       self.screenshot = hasFileName + '.' + opts.format;
 
       var location_screenshoot = path.normalize(__dirname + '/../../public') + '/screenshot'
-      var fileOutput           =  location_screenshoot + '/' + hasFileName + '.' + opts.format;
-
-      var outputStream = fs.createWriteStream(fileOutput);
+      var fileOutput           = location_screenshoot + '/' + hasFileName + '.' + opts.format;
 
       mkdirp(location_screenshoot, function(err) {
+
+        var outputStream = fs.createWriteStream(fileOutput);
 
         screenshot(url).pipe(outputStream);
 

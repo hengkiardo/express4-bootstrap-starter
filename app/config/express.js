@@ -69,8 +69,7 @@ module.exports = function (app, express, passport) {
     },
     store: new MongoStore({
       url: app.config.database.url,
-      collection : 'sessions',
-      auto_reconnect: true
+      collection : 'sessions'
     })
   }));
 

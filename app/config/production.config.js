@@ -7,7 +7,7 @@ module.exports = function (ROOT_PATH) {
       hostname: process.env.HOSTNAME || '127.0.0.1',
     },
     database: {
-      url: process.env.MONGOHQ_URL || 'mongodb://localhost/express4_bootstrap_starter'
+      url: process.env.MONGOLAB_URI'
     },
     BaseApiURL : 'http://'+process.env.HOSTNAME+':3001/api/',
     root     : ROOT_PATH,

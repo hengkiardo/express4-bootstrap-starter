@@ -27,17 +27,18 @@ Lightweight Bootstrap NodeJS Apps Build Using ExpressJS 4, MongoDB/Mongoose, Aut
 
 
 **NOTE:**
-After installing  Node.js and MongoDB server has running, then its time to running your server.
+After installing  Node.js and MongoDB server has running, then its time to run your server (this app!).
 
 ```
-  $ git clone git@github.com:aredo/express4-bootstrap-starter.git
-  $ cd express4-bootstrap-starter
-  $ npm install
-  $ cp app/config/config.example.js app/config/config.js
-  $ grunt
+  $   git clone git@github.com:aredo/express4-bootstrap-starter.git       \
+  &&  cd express4-bootstrap-starter                                       \
+  &&  npm install                                                         \
+  &&  cp app/config/config.example.js app/config/config.js                \
+  &&  grunt                                                               \
+  &&  open http://localhost:3001/
 ```
 
-Then visit [http://localhost:3001/](http://localhost:3001/)
+Then visit [http://localhost:3001/](http://localhost:3001/) (if not taken automatically)
 
 
 ### NPM Modules Used

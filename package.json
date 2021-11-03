@@ -68,7 +68,7 @@
     "statuses": "^1.2.0",
     "url-to-screenshot": "^0.6.0",
     "utility": "^1.2.1",
-    "validator": "3.27.0",
+    "validator": "13.7.0",
     "view-helpers": "^0.1.5",
     "winston": "^0.8.3"
   },
